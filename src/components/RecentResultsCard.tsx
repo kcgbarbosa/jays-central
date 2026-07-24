@@ -32,7 +32,7 @@ function RecentResultsCard() {
 
           return (
             <div
-              key={d.keyID}
+              key={d.gamePk}
               className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3 flex flex-col border-l-4
                 ${bjWon ? 'border-l-blue-600' : 'border-l-gray-200'}`}
             >

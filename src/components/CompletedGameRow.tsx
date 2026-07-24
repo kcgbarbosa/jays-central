@@ -9,7 +9,6 @@ type GameProps = {
 
 export function CompletedGameRow({ gameData }: GameProps) {
   const {
-    keyID,
     date,
     homeTeamScore,
     awayTeamScore,
@@ -59,7 +58,6 @@ export function CompletedGameRow({ gameData }: GameProps) {
 
   return (
     <tr
-      key={keyID}
       className={`border-b border-gray-100 transition-colors duration-150 ${
         isBlueJaysWinner
           ? 'bg-amber-50 hover:bg-amber-100/60'

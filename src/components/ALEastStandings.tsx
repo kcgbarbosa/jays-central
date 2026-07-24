@@ -22,7 +22,7 @@ function ALEastStandings() {
         </thead>
         <tbody className="divide-y divide-gray-100">
           {alEastTeams.map((team) => (
-            <tr key={team.keyID} className="text-sm text-gray-700">
+            <tr key={team.teamId} className="text-sm text-gray-700">
               <td className="py-2">{team.teamName}</td>
               <td className="py-2">{team.wins}</td>
               <td className="py-2">{team.losses}</td>

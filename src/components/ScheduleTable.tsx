@@ -131,11 +131,11 @@ function ScheduleTable() {
               </tr>
             ) : isCompleted ? (
               filteredGames.map((d) => (
-                <CompletedGameRow key={d.keyID} gameData={d} />
+                <CompletedGameRow key={d.gamePk} gameData={d} />
               ))
             ) : (
               filteredGames.map((d) => (
-                <UpcomingGameRow key={d.keyID} gameData={d} />
+                <UpcomingGameRow key={d.gamePk} gameData={d} />
               ))
             )}
           </tbody>

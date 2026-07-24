@@ -7,7 +7,6 @@ type GameProps = {
 
 function UpcomingGameRow({ gameData }: GameProps) {
   const {
-    keyID,
     date,
     homeTeamName,
     awayTeamName,
@@ -18,7 +17,6 @@ function UpcomingGameRow({ gameData }: GameProps) {
 
   return (
     <tr
-      key={keyID}
       className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150"
     >
       <td className="pl-4 pr-2 py-2.5 sm:px-4 sm:py-3 text-xs font-medium text-gray-500 whitespace-nowrap w-px">
