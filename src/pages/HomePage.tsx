@@ -1,5 +1,5 @@
 import FeaturedGameCard from '../components/FeaturedGameCard';
-import ALEastStandings from '../components/ALEastStandings';
+import ALStandings from '../components/ALStandings';
 import StatLeaderCard from '../components/StatLeaderCard';
 import RecentResultsCard from '../components/RecentResultsCard';
 import { useContext } from 'react';
@@ -36,7 +36,7 @@ function HomePage() {
 
         <section className="lg:col-span-1 flex flex-col gap-6">
           <div className="pb-4">
-            <ALEastStandings />
+            <ALStandings />
           </div>
           <div>
             <StatLeaderCard
