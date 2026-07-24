@@ -55,6 +55,7 @@ function ScheduleTable() {
   }, [
     scheduleFilter,
     scheduleData,
+    seasonData,
     regularSeasonStartDate,
     regularSeasonEndDate,
   ]);

@@ -36,9 +36,9 @@ export const formatTimeForDisplayUtil = (dateString: string): string => {
   if (isNaN(stringToDate.getTime())) return 'Invalid date';
 
   let hours = stringToDate.getHours();
-  let AMorPM = hours >= 12 ? 'pm' : 'am';
+  const AMorPM = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12 || 12;
-  let minutes = stringToDate.getMinutes();
+  const minutes = stringToDate.getMinutes();
 
   return `${hours}:${minutes < 10 ? `0${minutes}` : minutes} ${AMorPM}`.toString();
 };

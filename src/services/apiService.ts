@@ -72,7 +72,7 @@ export async function fetchHeroGameData(
   const POST_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=decisions`;
   switch (heroGame?.abstractGameState) {
     case 'Preview': {
-      let gamePreviewData = await fetchGameData(PRE_GAME_DATA);
+      const gamePreviewData = await fetchGameData(PRE_GAME_DATA);
       return gamePreviewData;
     }
     case 'Live': {
