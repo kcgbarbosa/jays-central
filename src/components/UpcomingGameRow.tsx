@@ -1,4 +1,7 @@
-import { formatTimeForDisplayUtil } from '../utils/dateAndTimeUtilities';
+import {
+  formatTimeForDisplayUtil,
+  formatDateForDisplayShortUtil,
+} from '../utils/dateAndTimeUtilities';
 import type { Game } from '../types/models/game.model';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
 type GameProps = {
@@ -18,7 +21,7 @@ function UpcomingGameRow({ gameData }: GameProps) {
   return (
     <tr className="border-b border-border hover:bg-muted/10 transition-colors duration-150">
       <td className="pl-4 pr-2 py-2.5 sm:px-4 sm:py-3 text-xs font-medium text-muted whitespace-nowrap w-px">
-        {date}
+        {formatDateForDisplayShortUtil(date)}
       </td>
 
       <td className="px-2 py-2.5 sm:px-4 sm:py-3 min-w-0 sm:text-center">

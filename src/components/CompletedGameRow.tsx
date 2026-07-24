@@ -2,6 +2,7 @@ import type { Game } from '../types/models/game.model';
 import { getGameResult } from '../utils/gameResultUtils';
 import WinLossBadge from './WinLossBadge';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
+import { formatDateForDisplayShortUtil } from '../utils/dateAndTimeUtilities';
 
 type GameProps = {
   gameData: Game;
@@ -65,7 +66,7 @@ export function CompletedGameRow({ gameData }: GameProps) {
       }`}
     >
       <td className="pl-4 pr-2 py-2.5 sm:px-4 sm:py-3 text-xs font-medium text-muted whitespace-nowrap w-px">
-        {date}
+        {formatDateForDisplayShortUtil(date)}
       </td>
       <td className="px-2 py-2.5 sm:px-4 sm:py-3 min-w-0 sm:text-center">
         <div className="flex items-center gap-2 text-sm sm:justify-center">
