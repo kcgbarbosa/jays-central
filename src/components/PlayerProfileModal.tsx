@@ -35,8 +35,12 @@ function PlayerProfileModal({
     window.addEventListener('keydown', handleEscKeyDown);
     if (isOpen) closeButtonRef.current?.focus();
 
+    const previousOverflow = document.body.style.overflow;
+    if (isOpen) document.body.style.overflow = 'hidden';
+
     return () => {
       window.removeEventListener('keydown', handleEscKeyDown);
+      document.body.style.overflow = previousOverflow;
     };
   }, [onClose, isOpen]);
 
@@ -57,9 +61,9 @@ function PlayerProfileModal({
             onClick={onClose}
             aria-label="Close"
             ref={closeButtonRef}
-            className="absolute right-6 text-lg text-muted hover:text-primary transition-colors"
+            className="absolute right-4 flex size-8 items-center justify-center rounded-full text-2xl leading-none text-muted transition-colors hover:bg-muted/10 hover:text-primary"
           >
-            x
+            &times;
           </button>
         </div>
         <div className="bg-primary flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">

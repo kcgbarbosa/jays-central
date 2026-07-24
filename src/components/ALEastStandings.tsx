@@ -14,10 +14,18 @@ function ALEastStandings() {
       <table className="w-full border-collapse">
         <thead>
           <tr className="text-xs font-semibold text-muted uppercase tracking-wider border-b border-border">
-            <td className="pb-2">Team</td>
-            <td className="pb-2">W</td>
-            <td className="pb-2">L</td>
-            <td className="pb-2">GB</td>
+            <th scope="col" className="pb-2 text-left font-semibold">
+              Team
+            </th>
+            <th scope="col" className="pb-2 text-left font-semibold">
+              W
+            </th>
+            <th scope="col" className="pb-2 text-left font-semibold">
+              L
+            </th>
+            <th scope="col" className="pb-2 text-left font-semibold">
+              GB
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
