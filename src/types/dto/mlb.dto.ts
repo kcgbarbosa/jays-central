@@ -124,9 +124,11 @@ export type TeamRecordsDTO = {
 
 export type TeamRecordsInfoDTO = {
   team: TeamInfoDTO;
-  divisionRank: number;
+  divisionRank: string;
+  wildCardRank?: string;
   gamesPlayed: number;
-  divisionGamesBack: number;
+  divisionGamesBack: string;
+  wildCardGamesBack: string;
   wins: number;
   losses: number;
   runDifferential: number;
