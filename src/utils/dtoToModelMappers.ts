@@ -54,77 +54,23 @@ export function linescoreModelMapper(dto: LinescoreDTO): Linescore {
   };
 }
 
-export function decisionsModelMapper(dto: DecisionsDTO): Decisions {
+function toPlayerShotUrls(id: number) {
   return {
-    winner: {
-      id: dto.winner.id,
-      fullName: dto.winner.fullName,
-      playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${dto.winner.id}/spots/240`,
-      playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${dto.winner.id}.jpg`,
-    },
-    loser: {
-      id: dto.loser.id,
-      fullName: dto.loser.fullName,
-      playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${dto.loser.id}/spots/240`,
-      playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${dto.loser.id}.jpg`,
-    },
-    save: dto.save
-      ? {
-          id: dto.save.id,
-          fullName: dto.save.fullName,
-          playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${dto.save.id}/spots/240`,
-          playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${dto.save.id}.jpg`,
-        }
-      : undefined,
+    playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${id}/spots/240`,
+    playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${id}.jpg`,
   };
 }
 
-export function gameModelMapper(result: GameResponseDTO) {
-  const formattedResult = result.dates.flatMap((data: GameDTO) => {
-    return data.games.map((subData: GameInfoDTO) => {
-      const probablePitchers: ProbablePitchers | undefined =
-        subData.teams.away.probablePitcher && subData.teams.home.probablePitcher
-          ? {
-              away: {
-                id: subData.teams.away.probablePitcher.id,
-                fullName: subData.teams.away.probablePitcher.fullName,
-                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.away.probablePitcher.id}/spots/240`,
-                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.away.probablePitcher.id}.jpg`,
-              },
-              home: {
-                id: subData.teams.home.probablePitcher.id,
-                fullName: subData.teams.home.probablePitcher.fullName,
-                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.home.probablePitcher.id}/spots/240`,
-                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.home.probablePitcher.id}.jpg`,
-              },
-            }
-          : undefined;
-      return {
-        keyID: crypto.randomUUID(),
-        date: subData.officialDate,
-        startTime: subData.gameDate,
-        gamePk: subData.gamePk,
-        abstractGameState: subData.status.abstractGameState,
-        detailedState: subData.status.detailedState,
-        statusCode: subData.status.statusCode,
-        awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
-        awayTeamName: subData.teams.away.team.name,
-        awayTeamScore: subData.teams.away.score,
-        homeTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.home.team.id}.svg`,
-        homeTeamName: subData.teams.home.team.name,
-        homeTeamScore: subData.teams.home.score,
-        gameVenue: subData.venue.name,
-        linescore: subData.linescore
-          ? linescoreModelMapper(subData.linescore)
-          : undefined,
-        decisions: subData.decisions
-          ? decisionsModelMapper(subData.decisions)
-          : undefined,
-        probablePitchers,
-      };
-    });
-  });
-  return formattedResult;
+function toPlayerRef(id: number, fullName: string) {
+  return { id, fullName, ...toPlayerShotUrls(id) };
+}
+
+export function decisionsModelMapper(dto: DecisionsDTO): Decisions {
+  return {
+    winner: toPlayerRef(dto.winner.id, dto.winner.fullName),
+    loser: toPlayerRef(dto.loser.id, dto.loser.fullName),
+    save: dto.save ? toPlayerRef(dto.save.id, dto.save.fullName) : undefined,
+  };
 }
 
 export function seasonDataModelMapper(result: SeasonResponseDTO) {
@@ -151,18 +97,14 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
       const probablePitchers: ProbablePitchers | undefined =
         subData.teams.away.probablePitcher && subData.teams.home.probablePitcher
           ? {
-              away: {
-                id: subData.teams.away.probablePitcher.id,
-                fullName: subData.teams.away.probablePitcher.fullName,
-                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.away.probablePitcher.id}/spots/240`,
-                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.away.probablePitcher.id}.jpg`,
-              },
-              home: {
-                id: subData.teams.home.probablePitcher.id,
-                fullName: subData.teams.home.probablePitcher.fullName,
-                playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${subData.teams.home.probablePitcher.id}/spots/240`,
-                playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${subData.teams.home.probablePitcher.id}.jpg`,
-              },
+              away: toPlayerRef(
+                subData.teams.away.probablePitcher.id,
+                subData.teams.away.probablePitcher.fullName
+              ),
+              home: toPlayerRef(
+                subData.teams.home.probablePitcher.id,
+                subData.teams.home.probablePitcher.fullName
+              ),
             }
           : undefined;
       return {
@@ -246,8 +188,7 @@ export function rosterDataModelMapper(result: RosterResponseDTO) {
       lastInitName: data.person.lastInitName,
 
       jerseyNumber: data.jerseyNumber,
-      playerHeadshotUrl: `https://midfield.mlbstatic.com/v1/people/${data.person.id}/spots/240`,
-      playerActionShotUrl: `https://securea.mlb.com/images/players/action_shots/${data.person.id}.jpg`,
+      ...toPlayerShotUrls(data.person.id),
       primaryNumber: data.person.primaryNumber,
       birthDate: data.person.birthDate,
       currentAge: data.person.currentAge,

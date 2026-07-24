@@ -9,7 +9,6 @@ import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 import {
   alTeamRecordsDataModelMapper,
-  gameModelMapper,
   rosterDataModelMapper,
   scheduleDataModelMapper,
   seasonDataModelMapper,
@@ -51,7 +50,7 @@ async function fetchGameData(url: string): Promise<Game | null> {
     return null;
   }
   const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = gameModelMapper(result);
+  const formattedResult = scheduleDataModelMapper(result);
   return formattedResult[0];
 }
 
