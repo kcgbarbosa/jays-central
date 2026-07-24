@@ -23,7 +23,7 @@ function RecentResultsCard() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold text-gray-900 py-4">
+      <h2 className="text-base font-semibold text-primary py-4">
         Past Results
       </h2>
       <div>
@@ -33,8 +33,8 @@ function RecentResultsCard() {
           return (
             <div
               key={d.gamePk}
-              className={`bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3 flex flex-col border-l-4
-                ${bjWon ? 'border-l-blue-600' : 'border-l-gray-200'}`}
+              className={`bg-background border border-border rounded-xl shadow-sm px-5 py-3 flex flex-col border-l-4
+                ${bjWon ? 'border-l-primary' : 'border-l-border'}`}
             >
               <div className="flex relative items-center justify-between ">
                 <div className="flex items-center gap-2">
@@ -43,31 +43,31 @@ function RecentResultsCard() {
                     src={d.awayTeamLogo}
                     className="w-10 h-10 object-contain"
                   />
-                  <span className="hidden sm:inline text-sm font-medium text-gray-700">
+                  <span className="hidden sm:inline text-sm font-medium text-primary">
                     {teamAbbreviator(d.awayTeamName)}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
                   <span
-                    className={`text-xl font-bold ${awayWon ? 'text-gray-900' : 'text-gray-500'}`}
+                    className={`text-xl font-bold ${awayWon ? 'text-primary' : 'text-muted'}`}
                   >
                     {d.awayTeamScore ?? '–'}
                   </span>
-                  <span className="text-gray-300 text-sm">–</span>
+                  <span className="text-muted text-sm">–</span>
                   <span
-                    className={`text-xl font-bold pr-2 ${!awayWon && scoresAvailable ? 'text-gray-900' : 'text-gray-500'}`}
+                    className={`text-xl font-bold pr-2 ${!awayWon && scoresAvailable ? 'text-primary' : 'text-muted'}`}
                   >
                     {d.homeTeamScore ?? '–'}
                   </span>
                   {scoresAvailable && <WinLossBadge won={bjWon} />}
-                  <span className="hidden sm:inline text-xs text-gray-500 pl-1">
+                  <span className="hidden sm:inline text-xs text-muted pl-1">
                     {formatDateForDisplayShortUtil(d.date)}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="hidden sm:inline text-sm font-medium text-gray-700">
+                  <span className="hidden sm:inline text-sm font-medium text-primary">
                     {teamAbbreviator(d.homeTeamName)}
                   </span>
                   <img

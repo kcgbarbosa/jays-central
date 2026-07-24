@@ -2,4 +2,11 @@
 
 @theme {
   --font-barlow-condensed: 'Barlow Condensed', sans-serif;
+
+  /* Blue Jays semantic palette */
+  --color-background: #ffffff;
+  --color-primary: #134a8e;
+  --color-accent: #e8291c;
+  --color-muted: #5b6472;
+  --color-border: #e3e7ed;
 }

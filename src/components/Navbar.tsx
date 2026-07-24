@@ -15,7 +15,7 @@ function Navbar() {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-gray-300 bg-blue-100 px-10 py-5">
+    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-border bg-primary/10 px-10 py-5">
       <Link to={'/'}>
         <img
           alt="Toronto Blue Jays logo"
@@ -31,7 +31,7 @@ function Navbar() {
           <RxHamburgerMenu size={25} />
         </button>
         {isOpen && (
-          <div className="absolute top-full -right-10 z-10 flex w-36 flex-col gap-1 rounded-lg border border-gray-100 bg-white p-2 shadow-lg">
+          <div className="absolute top-full -right-10 z-10 flex w-36 flex-col gap-1 rounded-lg border border-border bg-background p-2 shadow-lg">
             {navLinkInfo.map((d) => (
               <NavLink
                 key={d.id}
@@ -39,8 +39,8 @@ function Navbar() {
                 className={({ isActive }) =>
                   `rounded-md px-1 py-2 text-center text-base font-medium transition-colors duration-200 ${
                     isActive
-                      ? 'text-blue-600 font-semibold'
-                      : 'text-gray-600 hover:text-blue-400'
+                      ? 'text-primary font-semibold'
+                      : 'text-muted hover:text-primary'
                   }`
                 }
                 onClick={() => setIsOpen(false)}
@@ -59,8 +59,8 @@ function Navbar() {
             className={({ isActive }) =>
               `pt-5 pb-2 text-center text-base lg:text-lg font-medium transition-colors duration-200 ${
                 isActive
-                  ? 'text-blue-700 font-semibold border-b-3 border-blue-700'
-                  : 'text-gray-600 hover:text-blue-400'
+                  ? 'text-primary font-semibold border-b-3 border-primary'
+                  : 'text-muted hover:text-primary'
               }`
             }
           >

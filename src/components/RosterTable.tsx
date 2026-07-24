@@ -83,15 +83,15 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
   };
   return (
     <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">
-      <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-4 uppercase tracking-widest px-4 sm:px-0">
+      <h1 className="hidden sm:block text-xl font-bold text-primary mb-4 uppercase tracking-widest px-4 sm:px-0">
         Current Roster
       </h1>
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : (
-        <div className="-mx-4 sm:mx-0 border-y sm:border border-gray-300 sm:rounded-xl shadow-sm">
+        <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl shadow-sm">
           <table className="w-full border-collapse text-sm">
-            <thead className="bg-blue-600 text-white tracking-wide uppercase text-xs">
+            <thead className="bg-primary text-white tracking-wide uppercase text-xs">
               <tr>
                 <th className="text-left px-4 py-3">
                   <SortButton
@@ -153,7 +153,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
               variants={containerVariants}
               initial="hidden"
               animate="show"
-              className="divide-y divide-gray-100 bg-white"
+              className="divide-y divide-border bg-background"
             >
               {filteredRoster.map((player) => {
                 return (
@@ -164,7 +164,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                     whileHover={{ scale: 1.01 }}
                     variants={rowVariants}
                     key={player.id}
-                    className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
+                    className="hover:bg-primary/5 transition-colors duration-150 cursor-pointer"
                     onClick={() => handleSelectPlayer(player.id)}
                   >
                     <td className="px-4 py-3">
@@ -172,16 +172,16 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                         <img
                           src={player.playerHeadshotUrl}
                           alt={player.fullName}
-                          className="h-8 w-8 rounded-full object-cover bg-gray-100"
+                          className="h-8 w-8 rounded-full object-cover bg-muted/15"
                         />
                         <div>
-                          <div className="font-medium text-gray-900">
+                          <div className="font-medium text-primary">
                             {player.fullName}
                           </div>
-                          <div className="text-xs text-blue-600">
+                          <div className="text-xs text-accent">
                             #{player.jerseyNumber}
                           </div>
-                          <div className="lg:hidden flex gap-4 mt-1 text-xs text-gray-600">
+                          <div className="lg:hidden flex gap-4 mt-1 text-xs text-muted">
                             <span>{player.positionAbbreviation}</span>
                             <span>
                               {player.batSideCode}/{player.pitchHandCode}
@@ -193,19 +193,19 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
+                    <td className="px-4 py-2.5 text-muted hidden lg:table-cell">
                       {player.positionName} / {player.positionAbbreviation}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
+                    <td className="px-4 py-2.5 text-muted hidden lg:table-cell">
                       {player.batSideCode}/{player.pitchHandCode}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
+                    <td className="px-4 py-2.5 text-muted hidden lg:table-cell">
                       {player.currentAge}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
+                    <td className="px-4 py-2.5 text-muted hidden lg:table-cell">
                       {player.height}
                     </td>
-                    <td className="px-4 py-2.5 text-gray-600 hidden lg:table-cell">
+                    <td className="px-4 py-2.5 text-muted hidden lg:table-cell">
                       {player.weight} lbs
                     </td>
                   </motion.tr>

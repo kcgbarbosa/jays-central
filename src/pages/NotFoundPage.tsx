@@ -3,17 +3,17 @@ import dogImgURL from '../assets/imgs/goodBoy.webp';
 
 function NotFoundPage() {
   return (
-    <main className="grid grid-cols-1 min-h-11/12 md:grid-cols-[auto_auto] bg-white gap-4 justify-center items-center p-10">
+    <main className="grid grid-cols-1 min-h-11/12 md:grid-cols-[auto_auto] bg-background gap-4 justify-center items-center p-10">
       <h1 className="sr-only">Error Page</h1>
       <div>
-        <div className="text-6xl text-gray-900 tracking-tight font-semibold pb-4 ">
+        <div className="text-6xl text-primary tracking-tight font-semibold pb-4 ">
           Page Not Found...
         </div>
-        <div className="flex gap-2 pt-2 text-xl text-gray-900 ">
+        <div className="flex gap-2 pt-2 text-xl text-primary ">
           Kingsley will escort you back:
           <Link
             to={'/'}
-            className="text-xl text-blue-300 hover:text-blue-600 underline"
+            className="text-xl text-primary hover:text-accent underline"
           >
             Home
           </Link>
