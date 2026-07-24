@@ -9,7 +9,7 @@ function SchedulePage() {
   if (error) return <div>Error loading schedule: {error}</div>;
 
   return (
-    <main className="bg-gray-50 min-h-screen p-4">
+    <main className="bg-muted/5 min-h-screen p-4">
       <h1 className="sr-only">Schedule Page</h1>
       <ScheduleTable />
     </main>

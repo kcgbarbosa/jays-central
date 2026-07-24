@@ -31,8 +31,8 @@ function LinescoreTable({
     inningMap[inn.num] = inn;
   });
 
-  const cell = 'px-3 py-4 text-center text-sm border border-gray-100';
-  const headerCell = `${cell} bg-white font-semibold text-gray-900 text-xs uppercase`;
+  const cell = 'px-3 py-4 text-center text-sm border border-border';
+  const headerCell = `${cell} bg-background font-semibold text-primary text-xs uppercase`;
 
   const rows = [
     {
@@ -48,7 +48,7 @@ function LinescoreTable({
   ];
   return (
     <div className="hidden w-full mt-6 overflow-x-auto sm:block">
-      <table className="w-full border-collapse border border-gray-100 text-sm">
+      <table className="w-full border-collapse border border-border text-sm">
         <thead>
           <tr>
             <th className={headerCell}>Team</th>
@@ -92,7 +92,7 @@ function OutsIndicator({ outs }: { outs: number }) {
       {[0, 1, 2].map((i) => (
         <div
           key={i}
-          className={`size-3 rounded-full ${i < outs ? 'bg-blue-600' : 'bg-gray-200'}`}
+          className={`size-3 rounded-full ${i < outs ? 'bg-primary' : 'bg-border'}`}
         />
       ))}
     </div>
@@ -107,7 +107,7 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
     <>
       {/* Card Container */}
       <motion.div
-        className="w-full min-h-110 bg-white p-4 border border-gray-200 rounded-xl shadow-sm flex flex-col items-center justify-center"
+        className="w-full min-h-110 bg-background p-4 border border-border rounded-xl shadow-sm flex flex-col items-center justify-center"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         whileHover={{ scale: 1.01 }}
@@ -132,13 +132,13 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
         {/* Scoreboard Container */}
         <div className="w-full flex flex-col">
           {/* Date Status */}
-          <span className="text-base text-gray-600 flex justify-between pb-2">
+          <span className="text-base text-muted flex justify-between pb-2">
             {gameDataProp.abstractGameState === 'Live' && (
-              <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-red-700 ">
+              <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-accent ">
                 Live
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
                 </span>
               </span>
             )}
@@ -148,7 +148,7 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
           <div className="flex items-center gap-10 sm:gap-15">
             <span className="flex flex-1 flex-col items-center gap-2">
               <div
-                className={`sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-primary' : 'border-muted'}`}
               >
                 <img
                   alt={`${gameDataProp.awayTeamName} logo`}
@@ -156,10 +156,10 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
                   src={gameDataProp.awayTeamLogo}
                 />
               </div>
-              <div className="hidden text-xl font-medium text-gray-700 md:block">
+              <div className="hidden text-xl font-medium text-primary md:block">
                 {gameDataProp.awayTeamName}
               </div>
-              <div className="text-xl font-medium text-gray-700 md:hidden">
+              <div className="text-xl font-medium text-primary md:hidden">
                 {teamAbbreviator(gameDataProp.awayTeamName)}
               </div>
             </span>
@@ -176,7 +176,7 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
             </div>
             <span className="flex flex-1 flex-col items-center gap-2">
               <div
-                className={`sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-blue-600' : 'border-gray-600'}`}
+                className={`sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-primary' : 'border-muted'}`}
               >
                 <img
                   alt={`${gameDataProp.homeTeamName} logo`}
@@ -184,17 +184,17 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
                   src={gameDataProp.homeTeamLogo}
                 />
               </div>
-              <div className="hidden text-xl font-medium text-gray-700 md:block">
+              <div className="hidden text-xl font-medium text-primary md:block">
                 {gameDataProp.homeTeamName}
               </div>
-              <div className="text-xl font-medium text-gray-700 md:hidden">
+              <div className="text-xl font-medium text-primary md:hidden">
                 {teamAbbreviator(gameDataProp.homeTeamName)}
               </div>
             </span>
           </div>
           {/* Inning StartTime Venue */}
           <div className="items-center flex flex-col">
-            <div className="text-base text-gray-600 pt-4">
+            <div className="text-base text-muted pt-4">
               {gameDataProp.abstractGameState === 'Live' &&
                 gameDataProp.linescore?.inningState.slice(0, 3) +
                   ' ' +
@@ -208,14 +208,12 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
                 <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
               )}
               {gameDataProp.abstractGameState === 'Final' && (
-                <h3 className="text-gray-700 font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
+                <h3 className="text-primary font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
                   Final
                 </h3>
               )}
             </div>
-            <div className="text-base text-gray-600">
-              {gameDataProp.gameVenue}
-            </div>
+            <div className="text-base text-muted">{gameDataProp.gameVenue}</div>
           </div>
         </div>
         {/* Pitcher Linescore Container */}

@@ -46,30 +46,30 @@ function PlayerProfileModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
+        className="w-full max-w-4xl bg-background rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative flex px-6 py-3 items-center justify-center border-b border-gray-100">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+        <div className="relative flex px-6 py-3 items-center justify-center border-b border-border">
+          <span className="text-xs font-semibold text-muted uppercase tracking-widest">
             Player Profile
           </span>
           <button
             onClick={onClose}
             aria-label="Close"
             ref={closeButtonRef}
-            className="absolute right-6 text-lg text-gray-500 hover:text-gray-600 transition-colors"
+            className="absolute right-6 text-lg text-muted hover:text-primary transition-colors"
           >
             x
           </button>
         </div>
-        <div className="bg-blue-700 flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
+        <div className="bg-primary flex flex-col items-center md:flex-row md:items-end px-10 pt-10 pb-8 gap-6 md:gap-8">
           <img
             src={selectedPlayerData?.playerHeadshotUrl}
             alt={selectedPlayerData?.fullName}
             className="w-50 h-auto rounded-full ring-2 ring-white/75 shrink-0 md:self-end"
           />
           <div className="text-white min-w-0 pb-1 text-center md:text-left">
-            <p className="text-sm font-semibold text-blue-100 uppercase tracking-widest mb-2">
+            <p className="text-sm font-semibold text-white/70 uppercase tracking-widest mb-2">
               {selectedPlayerData?.positionName} &middot; B/T:{' '}
               {selectedPlayerData?.batSideCode}/
               {selectedPlayerData?.pitchHandCode}
@@ -86,7 +86,7 @@ function PlayerProfileModal({
             </p>
             <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-6 text-sm border-t border-white/25 pt-6">
               <span>
-                <span className="text-blue-100 text-xs uppercase tracking-wider">
+                <span className="text-white/70 text-xs uppercase tracking-wider">
                   Born{' '}
                 </span>
                 <span className="text-white">
@@ -95,7 +95,7 @@ function PlayerProfileModal({
               </span>
               {birthLocation && (
                 <span>
-                  <span className="text-blue-100 text-xs uppercase tracking-wider">
+                  <span className="text-white/70 text-xs uppercase tracking-wider">
                     From{' '}
                   </span>
                   <span className="text-white">{birthLocation}</span>
@@ -104,7 +104,7 @@ function PlayerProfileModal({
               <span>
                 {selectedPlayerData?.draftYear !== undefined ? (
                   <>
-                    <span className="text-blue-100 text-xs uppercase tracking-wider">
+                    <span className="text-white/70 text-xs uppercase tracking-wider">
                       Drafted{' '}
                     </span>
                     <span className="text-white">
@@ -113,7 +113,7 @@ function PlayerProfileModal({
                   </>
                 ) : (
                   <>
-                    <span className="text-blue-100 text-xs uppercase tracking-wider">
+                    <span className="text-white/70 text-xs uppercase tracking-wider">
                       Debut{' '}
                     </span>
                     <span className="text-white">
@@ -125,8 +125,8 @@ function PlayerProfileModal({
               <span
                 className={
                   selectedPlayerData?.active
-                    ? 'text-green-300 font-semibold'
-                    : 'text-red-300 font-semibold'
+                    ? 'text-white font-semibold'
+                    : 'text-accent font-semibold'
                 }
               >
                 {selectedPlayerData?.active ? 'Active' : 'Inactive'}
@@ -137,19 +137,19 @@ function PlayerProfileModal({
         <div className="p-10">
           {selectedPlayerData?.hitting === undefined &&
           !selectedPlayerData?.isPitcher ? (
-            <p className="text-center py-6 text-gray-500 font-medium text-sm">
+            <p className="text-center py-6 text-muted font-medium text-sm">
               No statistics available.
             </p>
           ) : (
             selectedPlayerData?.positionName !== 'Pitcher' && (
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  <h3 className="text-xs font-bold text-muted uppercase tracking-widest mb-2">
                     {new Date().getFullYear()} Standard Statistics
                   </h3>
-                  <div className="overflow-x-auto rounded-xl border border-gray-200">
+                  <div className="overflow-x-auto rounded-xl border border-border">
                     <table className="w-full text-center text-sm">
-                      <thead className="bg-blue-600 text-white font-semibold uppercase text-xs">
+                      <thead className="bg-primary text-white font-semibold uppercase text-xs">
                         <tr>
                           <th className="px-4 py-3">AB</th>
                           <th className="px-4 py-3">AVG</th>
@@ -159,7 +159,7 @@ function PlayerProfileModal({
                           <th className="px-4 py-3">OPS</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-100 font-medium text-gray-900">
+                      <tbody className="divide-y divide-border font-medium text-primary">
                         <tr>
                           <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.atBats}
@@ -186,12 +186,12 @@ function PlayerProfileModal({
                 </div>
 
                 <div>
-                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  <h3 className="text-xs font-bold text-muted uppercase tracking-widest mb-2">
                     {new Date().getFullYear()} Additional Statistics
                   </h3>
-                  <div className="overflow-x-auto rounded-xl border border-gray-300">
+                  <div className="overflow-x-auto rounded-xl border border-border">
                     <table className="w-full text-center text-sm">
-                      <thead className="bg-blue-600 text-white font-semibold uppercase text-xs">
+                      <thead className="bg-primary text-white font-semibold uppercase text-xs">
                         <tr>
                           <th className="px-4 py-3">BB</th>
                           <th className="px-4 py-3">2B</th>
@@ -201,7 +201,7 @@ function PlayerProfileModal({
                           <th className="px-4 py-3">SLG</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-100 font-medium text-gray-900">
+                      <tbody className="divide-y divide-border font-medium text-primary">
                         <tr>
                           <td className="px-4 py-4">
                             {selectedPlayerData?.hitting?.baseOnBalls}
@@ -231,12 +231,12 @@ function PlayerProfileModal({
           )}
           {selectedPlayerData?.isPitcher && (
             <div>
-              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
+              <h3 className="text-xs font-bold text-muted uppercase tracking-widest mb-2">
                 {new Date().getFullYear()} Pitching Statistics
               </h3>
-              <div className="overflow-x-auto rounded-xl border border-gray-300">
+              <div className="overflow-x-auto rounded-xl border border-border">
                 <table className="w-full text-center text-sm">
-                  <thead className="bg-blue-600 text-white font-semibold uppercase text-xs">
+                  <thead className="bg-primary text-white font-semibold uppercase text-xs">
                     <tr>
                       <th className="px-4 py-3">G</th>
                       <th className="px-4 py-3">W-L</th>
@@ -246,7 +246,7 @@ function PlayerProfileModal({
                       <th className="px-4 py-3">WHIP</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 font-medium text-gray-900">
+                  <tbody className="divide-y divide-border font-medium text-primary">
                     <tr>
                       <td className="px-4 py-4">
                         {selectedPlayerData?.pitching?.gamesPitched}

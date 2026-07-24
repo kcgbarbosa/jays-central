@@ -1,5 +1,5 @@
 export type ALRecords = {
-  keyID: string;
+  teamId: number;
   divisionId: number;
   teamName: string;
   divisionRank: number;

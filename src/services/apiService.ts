@@ -15,8 +15,8 @@ import {
 } from '../utils/dtoToModelMappers';
 
 const BASE_URL = import.meta.env.VITE_MLB_BASE_URL;
+const TEAM_ID = import.meta.env.VITE_BLUEJAYS_TEAMID;
 const SEASON_DATA_URL = `${BASE_URL}/seasons?sportId=1`;
-const AL_STANDINGS_URL = `https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026&standingsTypes=regularSeason`;
 
 export async function fetchSeasonData() {
   const response = await fetch(SEASON_DATA_URL);
@@ -31,9 +31,9 @@ export async function fetchSeasonData() {
 export async function fetchSchedule(seasonData: Season[]) {
   const data = seasonData[0];
   if (data === undefined) {
-    console.log(`Error: seasonData is undefined`);
+    throw new Error('seasonData is undefined');
   }
-  const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=141&startDate=${data?.springStartDate}&endDate=${data?.postSeasonEndDate}`;
+  const FULL_TEAM_SCHEDULE = `${BASE_URL}/schedule?sportId=1&teamId=${TEAM_ID}&startDate=${data.springStartDate}&endDate=${data.postSeasonEndDate}`;
   const response = await fetch(FULL_TEAM_SCHEDULE);
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
@@ -46,8 +46,7 @@ export async function fetchSchedule(seasonData: Season[]) {
 async function fetchGameData(url: string): Promise<Game | null> {
   const response = await fetch(url);
   if (!response.ok) {
-    console.log(`response status: ${response.status}`);
-    return null;
+    throw new Error(`response status: ${response.status}`);
   }
   const result = (await response.json()) as GameResponseDTO;
   const formattedResult = scheduleDataModelMapper(result);
@@ -58,12 +57,12 @@ export async function fetchHeroGameData(
   scheduleData: Game[]
 ): Promise<Game | null> {
   if (scheduleData === undefined) {
-    console.log(`Error: scheduleData is undefined`);
+    console.error('scheduleData is undefined');
     return null;
   }
   const heroGame = getHeroGameDateUtil(scheduleData);
   if (heroGame?.gamePk === undefined) {
-    console.log(`Error: no gamePk found`);
+    console.error('no gamePk found');
     return null;
   }
   const PRE_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=probablePitcher`;
@@ -92,6 +91,8 @@ export async function fetchHeroGameData(
 }
 
 export async function fetchALTeamRecords() {
+  const season = new Date().getFullYear();
+  const AL_STANDINGS_URL = `${BASE_URL}/standings?leagueId=103&season=${season}&standingsTypes=regularSeason`;
   const response = await fetch(AL_STANDINGS_URL);
   if (!response.ok) {
     throw new Error(`response status: ${response.status}`);
@@ -102,8 +103,9 @@ export async function fetchALTeamRecords() {
 }
 
 export async function fetchRosterData() {
+  const season = new Date().getFullYear();
   const response = await fetch(
-    `${BASE_URL}/teams/141/roster?rosterType=40Man&season=2026&hydrate=person(stats(group=[hitting,pitching],type=[season,seasonAdvanced],season=${new Date().getFullYear()})%3A%29`
+    `${BASE_URL}/teams/${TEAM_ID}/roster?rosterType=40Man&season=${season}&hydrate=person(stats(group=[hitting,pitching],type=[season],season=${season})%3A%29`
   );
 
   if (!response.ok) {

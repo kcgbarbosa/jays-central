@@ -18,7 +18,7 @@ function RosterPage() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   return (
-    <main className="bg-gray-50 w-full min-h-screen p-4">
+    <main className="bg-muted/5 w-full min-h-screen p-4">
       <h1 className="sr-only">Roster Page</h1>
       {isOpen && (
         <PlayerProfileModal

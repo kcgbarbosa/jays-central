@@ -62,17 +62,17 @@ function ScheduleTable() {
 
   const filterBtnBase =
     'px-3 py-1.5 rounded text-sm font-medium transition-colors duration-150 cursor-pointer';
-  const filterBtnActive = 'bg-amber-100 text-amber-900 hover:bg-amber-200';
+  const filterBtnActive = 'bg-primary/10 text-primary hover:bg-primary/20';
   const filterBtnInactive =
-    'text-amber-200 hover:text-white hover:bg-amber-700';
+    'text-white/70 hover:text-white hover:bg-primary/80';
 
   return (
     <div className="sm:py-8 :px-4 sm:max-w-11/12 sm:mx-auto">
-      <h1 className="hidden sm:block text-xl font-bold text-gray-900 mb-3 uppercase tracking-widest px-4 sm:px-0">
+      <h1 className="hidden sm:block text-xl font-bold text-primary mb-3 uppercase tracking-widest px-4 sm:px-0">
         {new Date().getFullYear()} Schedule
       </h1>
-      <div className="-mx-4 sm:mx-0 border-y sm:border border-gray-300 sm:rounded-xl overflow-hidden shadow-sm">
-        <div className="bg-amber-800 px-4 py-3 flex items-center gap-2">
+      <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl overflow-hidden shadow-sm">
+        <div className="bg-primary px-4 py-3 flex items-center gap-2">
           <button
             className={`${filterBtnBase} ${scheduleFilter === 'Remaining Games' ? filterBtnActive : filterBtnInactive}`}
             onClick={() => handleSetScheduleFilter('Remaining Games')}
@@ -103,7 +103,7 @@ function ScheduleTable() {
           </select>
         </div>
         <table className="w-full border-collapse">
-          <thead className="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-200">
+          <thead className="bg-muted/10 text-xs font-semibold text-muted uppercase tracking-wide border-b border-border">
             {isCompleted ? (
               <tr>
                 <th className="px-4 py-3 text-left">Date</th>
@@ -119,23 +119,20 @@ function ScheduleTable() {
               </tr>
             )}
           </thead>
-          <tbody className="divide-y divide-gray-100 bg-white">
+          <tbody className="divide-y divide-border bg-background">
             {filteredGames.length === 0 ? (
               <tr>
-                <td
-                  colSpan={3}
-                  className="text-center p-4 text-gray-500 text-sm"
-                >
+                <td colSpan={3} className="text-center p-4 text-muted text-sm">
                   No games found.
                 </td>
               </tr>
             ) : isCompleted ? (
               filteredGames.map((d) => (
-                <CompletedGameRow key={d.keyID} gameData={d} />
+                <CompletedGameRow key={d.gamePk} gameData={d} />
               ))
             ) : (
               filteredGames.map((d) => (
-                <UpcomingGameRow key={d.keyID} gameData={d} />
+                <UpcomingGameRow key={d.gamePk} gameData={d} />
               ))
             )}
           </tbody>

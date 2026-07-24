@@ -18,6 +18,8 @@ import type {
   ProbablePitchers,
 } from '../types/models/linescore.model';
 
+const MEDIA_BASE_URL = import.meta.env.VITE_MLB_MEDIA_BASE_URL;
+
 export function linescoreModelMapper(dto: LinescoreDTO): Linescore {
   return {
     currentInning: dto.currentInning,
@@ -108,17 +110,16 @@ export function scheduleDataModelMapper(result: GameResponseDTO) {
             }
           : undefined;
       return {
-        keyID: crypto.randomUUID(),
         date: subData.officialDate,
         startTime: subData.gameDate,
         gamePk: subData.gamePk,
         abstractGameState: subData.status.abstractGameState,
         detailedState: subData.status.detailedState,
         statusCode: subData.status.statusCode,
-        awayTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.away.team.id}.svg`,
+        awayTeamLogo: `${MEDIA_BASE_URL}/${subData.teams.away.team.id}.svg`,
         awayTeamName: subData.teams.away.team.name,
         awayTeamScore: subData.teams.away.score,
-        homeTeamLogo: `https://www.mlbstatic.com/team-logos/${subData.teams.home.team.id}.svg`,
+        homeTeamLogo: `${MEDIA_BASE_URL}/${subData.teams.home.team.id}.svg`,
         homeTeamName: subData.teams.home.team.name,
         homeTeamScore: subData.teams.home.score,
         gameVenue: subData.venue.name,
@@ -139,7 +140,7 @@ export function alTeamRecordsDataModelMapper(result: RecordsResponseDTO) {
   const formattedResult = result.records.flatMap((data: TeamRecordsDTO) => {
     return data.teamRecords.map((subdata: TeamRecordsInfoDTO) => {
       return {
-        keyID: crypto.randomUUID(),
+        teamId: subdata.team.id,
         divisionId: data.division.id,
         teamName: subdata.team.name,
         divisionRank: subdata.divisionRank,
