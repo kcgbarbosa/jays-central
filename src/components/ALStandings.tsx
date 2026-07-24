@@ -5,7 +5,7 @@ const BLUEJAYS_TEAM_ID = Number(import.meta.env.VITE_BLUEJAYS_TEAMID);
 
 type StandingsView = 'east' | 'wildcard';
 
-function ALEastStandings() {
+function ALStandings() {
   const standingsData = useContext(StandingsContext);
   const [view, setView] = useState<StandingsView>('east');
 
@@ -89,4 +89,4 @@ function ALEastStandings() {
   );
 }
 
-export default ALEastStandings;
+export default ALStandings;
