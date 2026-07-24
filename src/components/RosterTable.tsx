@@ -1,8 +1,6 @@
 import { useContext, useMemo, useState } from 'react';
 import { PlayerContext } from '../store/contexts';
-import SortButton, {
-  type RosterFilterType,
-} from './SortButton';
+import SortButton, { type RosterFilterType } from './SortButton';
 import { motion } from 'motion/react';
 
 type RosterProps = {

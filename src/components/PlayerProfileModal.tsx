@@ -7,7 +7,11 @@ type PlayerProfileModalProps = {
   onClose: () => void;
 };
 
-function PlayerProfileModal({ playerID, isOpen, onClose }: PlayerProfileModalProps) {
+function PlayerProfileModal({
+  playerID,
+  isOpen,
+  onClose,
+}: PlayerProfileModalProps) {
   const playerData = useContext(PlayerContext);
 
   const selectedPlayerData = playerData.find((d) => d.id === playerID);
@@ -34,13 +38,11 @@ function PlayerProfileModal({ playerID, isOpen, onClose }: PlayerProfileModalPro
     return () => {
       window.removeEventListener('keydown', handleEscKeyDown);
     };
-  }, [onClose]);
+  }, [onClose, isOpen]);
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors ${
-        isOpen ? 'visible bg-black/40' : 'visible'
-      }`}
+      className="fixed inset-0 z-50 flex justify-center items-center p-4 transition-colors bg-black/40"
       onClick={onClose}
     >
       <div

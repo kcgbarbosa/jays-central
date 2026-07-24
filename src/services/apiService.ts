@@ -9,7 +9,6 @@ import { getHeroGameDateUtil } from '../utils/dateAndTimeUtilities';
 
 import {
   alTeamRecordsDataModelMapper,
-  gameModelMapper,
   rosterDataModelMapper,
   scheduleDataModelMapper,
   seasonDataModelMapper,
@@ -51,7 +50,7 @@ async function fetchGameData(url: string): Promise<Game | null> {
     return null;
   }
   const result = (await response.json()) as GameResponseDTO;
-  const formattedResult = gameModelMapper(result);
+  const formattedResult = scheduleDataModelMapper(result);
   return formattedResult[0];
 }
 
@@ -72,7 +71,7 @@ export async function fetchHeroGameData(
   const POST_GAME_DATA = `${BASE_URL}/schedule/?sportId=1&gamePk=${heroGame?.gamePk}&hydrate=decisions`;
   switch (heroGame?.abstractGameState) {
     case 'Preview': {
-      let gamePreviewData = await fetchGameData(PRE_GAME_DATA);
+      const gamePreviewData = await fetchGameData(PRE_GAME_DATA);
       return gamePreviewData;
     }
     case 'Live': {

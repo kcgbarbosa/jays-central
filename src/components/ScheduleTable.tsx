@@ -5,10 +5,7 @@ import UpcomingGameRow from './UpcomingGameRow';
 import { isGameInPast } from '../utils/dateAndTimeUtilities';
 
 type ScheduleFilterType =
-  | 'Remaining Games'
-  | 'Completed Games'
-  | 'spring'
-  | 'postSeason';
+  'Remaining Games' | 'Completed Games' | 'spring' | 'postSeason';
 
 function ScheduleTable() {
   const scheduleData = useContext(ScheduleContext);
@@ -55,6 +52,7 @@ function ScheduleTable() {
   }, [
     scheduleFilter,
     scheduleData,
+    seasonData,
     regularSeasonStartDate,
     regularSeasonEndDate,
   ]);
