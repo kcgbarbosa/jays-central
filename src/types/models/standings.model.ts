@@ -2,9 +2,11 @@ export type ALRecords = {
   teamId: number;
   divisionId: number;
   teamName: string;
-  divisionRank: number;
+  divisionRank: string;
+  wildCardRank: string | null;
   gamesPlayed: number;
-  gamesBack: number;
+  gamesBack: string;
+  wildCardGamesBack: string;
   wins: number;
   losses: number;
   runDiff: number;

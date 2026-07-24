@@ -1,10 +1,12 @@
 import FeaturedGameCard from '../components/FeaturedGameCard';
-import ALEastStandings from '../components/ALEastStandings';
+import ALStandings from '../components/ALStandings';
 import StatLeaderCard from '../components/StatLeaderCard';
 import RecentResultsCard from '../components/RecentResultsCard';
 import { useContext } from 'react';
 import { PlayerContext, HeroGameContext } from '../store/contexts';
 import { getStatLeader } from '../utils/statisticUtilities';
+
+const MIN_INNINGS_PITCHED_FOR_LEADER = 20;
 
 function HomePage() {
   const playerData = useContext(PlayerContext);
@@ -17,8 +19,14 @@ function HomePage() {
 
   const hitLeader = getStatLeader(playerData, (d) => d.hitting?.hits ?? -1);
 
-  const opsLeader = getStatLeader(playerData, (d) =>
-    parseFloat(d.hitting?.ops ?? '-1')
+  const qualifiedPitchers = playerData.filter(
+    (d) =>
+      d.pitching &&
+      parseFloat(d.pitching.inningsPitched) >= MIN_INNINGS_PITCHED_FOR_LEADER
+  );
+  const strikeoutLeader = getStatLeader(
+    qualifiedPitchers,
+    (d) => d.pitching?.strikeOuts ?? -1
   );
 
   return (
@@ -36,7 +44,7 @@ function HomePage() {
 
         <section className="lg:col-span-1 flex flex-col gap-6">
           <div className="pb-4">
-            <ALEastStandings />
+            <ALStandings />
           </div>
           <div>
             <StatLeaderCard
@@ -62,13 +70,13 @@ function HomePage() {
           </div>
           <div>
             <StatLeaderCard
-              statName="OPS"
-              playerName={opsLeader?.fullName}
-              playerID={opsLeader?.id}
-              statValue={opsLeader?.hitting?.ops}
-              jerseyNumber={`#${opsLeader?.jerseyNumber}`}
-              positionAbbreviation={opsLeader?.positionAbbreviation}
-              statAbbreviation="OPS"
+              statName="Strikeouts"
+              playerName={strikeoutLeader?.fullName}
+              playerID={strikeoutLeader?.id}
+              statValue={strikeoutLeader?.pitching?.strikeOuts}
+              jerseyNumber={`#${strikeoutLeader?.jerseyNumber}`}
+              positionAbbreviation={strikeoutLeader?.positionAbbreviation}
+              statAbbreviation="K"
             />
           </div>
         </section>

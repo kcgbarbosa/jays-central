@@ -2,6 +2,7 @@ import { useContext, useMemo, useState } from 'react';
 import { PlayerContext } from '../store/contexts';
 import SortButton, { type RosterFilterType } from './SortButton';
 import { motion } from 'motion/react';
+import { filterPlayersBySearch } from '../utils/rosterSearchUtils';
 
 type RosterProps = {
   handleSelectPlayer: (id: number) => void;
@@ -12,13 +13,27 @@ const toInches = (h: string) => {
   return ft * 12 + ins;
 };
 
+const POSITION_GROUPS: { label: string; positionType: string | null }[] = [
+  { label: 'All', positionType: null },
+  { label: 'Pitchers', positionType: 'Pitcher' },
+  { label: 'Catchers', positionType: 'Catcher' },
+  { label: 'Infield', positionType: 'Infielder' },
+  { label: 'Outfield', positionType: 'Outfielder' },
+];
+
 function RosterTable({ handleSelectPlayer }: RosterProps) {
   const playerData = useContext(PlayerContext);
   const [rosterFilter, setRosterFilter] =
     useState<RosterFilterType>('lastNameAToZ');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [positionType, setPositionType] = useState<string | null>(null);
 
   const filteredRoster = useMemo(() => {
-    const sorted = [...playerData];
+    const searched = filterPlayersBySearch(playerData, searchQuery);
+    const byPosition = positionType
+      ? searched.filter((p) => p.positionType === positionType)
+      : searched;
+    const sorted = [...byPosition];
     switch (rosterFilter) {
       case 'firstNameAToZ':
         return sorted.sort((a, b) => a.firstName.localeCompare(b.firstName));
@@ -59,7 +74,7 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
       default:
         return sorted;
     }
-  }, [playerData, rosterFilter]);
+  }, [playerData, rosterFilter, searchQuery, positionType]);
 
   const containerVariants = {
     hidden: {},
@@ -86,30 +101,45 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
       <h1 className="hidden sm:block text-xl font-bold text-primary mb-4 uppercase tracking-widest px-4 sm:px-0">
         Current Roster
       </h1>
+      <div className="px-4 sm:px-0 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {POSITION_GROUPS.map((group) => (
+            <button
+              key={group.label}
+              onClick={() => setPositionType(group.positionType)}
+              className={`px-3 py-1 border text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
+                positionType === group.positionType
+                  ? 'bg-primary text-white border-primary'
+                  : 'border-border text-muted hover:border-primary hover:text-primary'
+              }`}
+            >
+              {group.label}
+            </button>
+          ))}
+        </div>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search players..."
+          aria-label="Search players"
+          className="w-full sm:w-64 px-3 py-2 text-sm rounded border border-border bg-background text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/40"
+        />
+      </div>
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
+      ) : filteredRoster.length === 0 ? (
+        <div className="px-4 sm:px-0 text-muted text-sm">
+          No players match your search.
+        </div>
       ) : (
         <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl shadow-sm">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-primary text-white tracking-wide uppercase text-xs">
               <tr>
-                <th className="text-left px-4 py-3">
-                  <SortButton
-                    label="Player"
-                    asc="lastNameAToZ"
-                    desc="lastNameZToA"
-                    activeFilter={rosterFilter}
-                    onSelect={setRosterFilter}
-                  />
-                </th>
+                <th className="text-left px-4 py-3">Player</th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
-                  <SortButton
-                    label="Position"
-                    asc="positionAToZ"
-                    desc="positionZToA"
-                    activeFilter={rosterFilter}
-                    onSelect={setRosterFilter}
-                  />
+                  Position
                 </th>
                 <th className="text-left px-4 py-3 hidden lg:table-cell">
                   <SortButton
