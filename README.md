@@ -35,8 +35,8 @@ The MLB Stats API provides deeply nested JSON data. Team responses, pitcher refe
 
 ```bash
 # 1. Clone and install
-git clone https://github.com/kcgbarbosa/torontobluejays-dashboard.git
-cd torontobluejays-dashboard
+git clone https://github.com/kcgbarbosa/jays-central.git
+cd jays-central
 npm install
 
 # 2. Create .env
