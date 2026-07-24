@@ -41,14 +41,17 @@ export function useMLBData() {
         const heroGame = await fetchHeroGameData(schedule);
         setHeroGameData(heroGame);
 
-        if (heroGame?.abstractGameState === 'Live') {
-          const pollGameData = () => {
-            timeoutID = setTimeout(async () => {
-              const heroGame = await fetchHeroGameData(schedule);
-              setHeroGameData(heroGame);
+        const pollGameData = () => {
+          timeoutID = setTimeout(async () => {
+            const freshGame = await fetchHeroGameData(schedule);
+            setHeroGameData(freshGame);
+            if (freshGame?.abstractGameState !== 'Final') {
               pollGameData();
-            }, 15000);
-          };
+            }
+          }, 15000);
+        };
+
+        if (heroGame?.abstractGameState !== 'Final') {
           pollGameData();
         }
       } catch (err) {
