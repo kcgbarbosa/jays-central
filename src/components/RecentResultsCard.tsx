@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { teamAbbreviator } from '../utils/teamAbbreviator';
-import { getGameResult } from '../utils/gameResultUtils';
+import { getGameResult, getLastTenRecord } from '../utils/gameResultUtils';
 import { HeroGameContext, ScheduleContext } from '../store/contexts';
 import WinLossBadge from './WinLossBadge';
 import {
@@ -21,11 +21,16 @@ function RecentResultsCard() {
     .reverse()
     .slice(0, 7);
 
+  const lastTenRecord = getLastTenRecord(schedulePreviewData);
+
   return (
     <div>
-      <h2 className="text-base font-semibold text-primary py-4">
-        Past Results
-      </h2>
+      <div className="flex items-center gap-3 py-4">
+        <h2 className="text-base font-semibold text-primary">Past Results</h2>
+        <span className="text-xs font-semibold text-muted uppercase tracking-wider border border-border px-2 py-1">
+          L10: {lastTenRecord.wins}-{lastTenRecord.losses}
+        </span>
+      </div>
       <div className="space-y-2">
         {pastGames.map((d) => {
           const { bjWon, scoresAvailable, awayWon } = getGameResult(d);
