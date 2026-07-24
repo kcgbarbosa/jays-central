@@ -100,8 +100,7 @@ function OutsIndicator({ outs }: { outs: number }) {
 }
 
 function FeaturedGameCard({ gameDataProp }: GameDataProps) {
-  if (!gameDataProp || !gameDataProp.date)
-    return <div>No game data available</div>;
+  if (!gameDataProp || !gameDataProp.date) return null;
 
   return (
     <>

@@ -1,11 +1,8 @@
 import RosterTable from '../components/RosterTable';
 import PlayerProfileModal from '../components/PlayerProfileModal';
-import { useContext, useState } from 'react';
-import { AppStatusContext } from '../store/contexts';
+import { useState } from 'react';
 
 function RosterPage() {
-  const { isLoading, error } = useContext(AppStatusContext);
-
   const [selectedPlayerID, setSelectedPlayerID] = useState<number | null>(null);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -15,8 +12,6 @@ function RosterPage() {
     setIsOpen(true);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
   return (
     <main className="bg-muted/5 w-full min-h-screen p-4">
       <h1 className="sr-only">Roster Page</h1>

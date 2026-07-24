@@ -26,7 +26,7 @@ function RecentResultsCard() {
       <h2 className="text-base font-semibold text-primary py-4">
         Past Results
       </h2>
-      <div>
+      <div className="space-y-2">
         {pastGames.map((d) => {
           const { bjWon, scoresAvailable, awayWon } = getGameResult(d);
 

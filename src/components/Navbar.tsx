@@ -15,7 +15,7 @@ function Navbar() {
   const handleClick = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-border bg-primary/10 px-10 py-5">
+    <nav className="sticky top-0 z-10 flex w-full justify-between md:justify-start gap-15 border-b border-border bg-background px-10 py-5">
       <Link to={'/'}>
         <img
           alt="Toronto Blue Jays logo"
