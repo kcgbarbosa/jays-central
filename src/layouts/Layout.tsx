@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { Outlet } from 'react-router-dom';
 import { AppStatusContext } from '../store/contexts';
 import { CircleLoader } from 'react-spinners';
@@ -25,6 +26,7 @@ function Layout() {
       ) : (
         <Outlet />
       )}
+      <Footer />
     </div>
   );
 }

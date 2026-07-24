@@ -3,7 +3,7 @@ import dogImgURL from '../assets/imgs/goodBoy.webp';
 
 function NotFoundPage() {
   return (
-    <main className="grid grid-cols-1 min-h-11/12 md:grid-cols-[auto_auto] bg-background gap-4 justify-center items-center p-10">
+    <main className="grid grid-cols-1 flex-1 md:grid-cols-[auto_auto] bg-background gap-4 justify-center items-center p-10">
       <h1 className="sr-only">Error Page</h1>
       <div>
         <div className="text-6xl text-primary tracking-tight font-semibold pb-4 ">

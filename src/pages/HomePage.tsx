@@ -30,7 +30,7 @@ function HomePage() {
   );
 
   return (
-    <main className="bg-muted/5 min-h-screen w-full p-4 overflow-hidden">
+    <main className="bg-muted/5 flex-1 w-full p-4 overflow-hidden">
       <h1 className="sr-only">Home Page</h1>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">

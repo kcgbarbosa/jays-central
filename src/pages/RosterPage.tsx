@@ -13,7 +13,7 @@ function RosterPage() {
   };
 
   return (
-    <main className="bg-muted/5 w-full min-h-screen p-4">
+    <main className="bg-muted/5 w-full flex-1 p-4">
       <h1 className="sr-only">Roster Page</h1>
       {isOpen && (
         <PlayerProfileModal
