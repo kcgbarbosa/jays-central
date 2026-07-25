@@ -34,10 +34,7 @@ function HomePage() {
       <h1 className="sr-only">Home Page</h1>
 
       <section className="bg-primary">
-        <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
-          <p className="text-center text-sm font-semibold uppercase tracking-widest text-white/70 pb-8">
-            Featured Game
-          </p>
+        <div className="max-w-5xl mx-auto px-4 py-6 sm:py-8">
           <FeaturedGameCard gameDataProp={heroGameData} />
         </div>
       </section>
