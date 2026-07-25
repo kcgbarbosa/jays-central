@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Game } from '../types/models/game.model';
 import {
   formatTimeForDisplayUtil,
@@ -23,6 +24,7 @@ function LinescoreTable({
   awayTeamName,
   homeTeamName,
 }: LinescoreTableProps) {
+  const [isOpen, setIsOpen] = useState(true);
   const innings = linescore?.innings ?? [];
   const totalInnings = Math.max(9, innings.length);
   const inningNumbers = Array.from({ length: totalInnings }, (_, i) => i + 1);
@@ -48,43 +50,63 @@ function LinescoreTable({
     },
   ];
   return (
-    <div className="hidden w-full mt-8 overflow-x-auto text-white sm:block">
-      <table className="w-full border-collapse text-sm">
-        <thead>
-          <tr className="border-b border-white/20">
-            <th className={headerCell}>Team</th>
-            {inningNumbers.map((n) => (
-              <th key={n} className={headerCell}>
-                {n}
-              </th>
-            ))}
-            <th className={`${headerCell} border-l border-white/20`}>R</th>
-            <th className={headerCell}>H</th>
-            <th className={headerCell}>E</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-white/20">
-          {rows.map(({ label, side, totals }) => (
-            <tr key={side}>
-              <td className={`${cell} font-bold text-center`}>
-                {teamAbbreviator(label)}
-              </td>
-              {inningNumbers.map((n) => (
-                <td key={n} className={`${cell} font-medium`}>
-                  {inningMap[n]?.[side].runs ?? '-'}
-                </td>
+    <div className="w-full rounded-2xl border border-white/20 bg-white/10 p-4 mt-8 text-white">
+      <div className="flex items-center justify-center relative mb-3">
+        <h2 className="text-xs font-semibold text-white/70 uppercase tracking-widest text-center">
+          Line Score
+        </h2>
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="absolute right-0 text-xs font-semibold text-white/70 uppercase tracking-wider hover:text-white"
+        >
+          {isOpen ? 'Hide' : 'Show'}
+        </button>
+      </div>
+      {isOpen && (
+        <div className="w-full overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-white/20">
+                <th className={headerCell}>Team</th>
+                {inningNumbers.map((n) => (
+                  <th key={n} className={headerCell}>
+                    {n}
+                  </th>
+                ))}
+                <th className={`${headerCell} border-l border-white/20`}>R</th>
+                <th className={headerCell}>H</th>
+                <th className={headerCell}>E</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/20">
+              {rows.map(({ label, side, totals }) => (
+                <tr key={side}>
+                  <td className={`${cell} font-bold text-center`}>
+                    {teamAbbreviator(label)}
+                  </td>
+                  {inningNumbers.map((n) => (
+                    <td key={n} className={`${cell} font-medium`}>
+                      {inningMap[n]?.[side].runs ?? '-'}
+                    </td>
+                  ))}
+                  <td
+                    className={`${cell} font-semibold border-l border-white/20`}
+                  >
+                    {totals?.runs ?? '-'}
+                  </td>
+                  <td className={`${cell} font-semibold`}>
+                    {totals?.hits ?? '-'}
+                  </td>
+                  <td className={`${cell} font-semibold`}>
+                    {totals?.errors ?? '-'}
+                  </td>
+                </tr>
               ))}
-              <td className={`${cell} font-semibold border-l border-white/20`}>
-                {totals?.runs ?? '-'}
-              </td>
-              <td className={`${cell} font-semibold`}>{totals?.hits ?? '-'}</td>
-              <td className={`${cell} font-semibold`}>
-                {totals?.errors ?? '-'}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
@@ -107,7 +129,7 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
 
   return (
     <motion.div
-      className="w-full max-w-3xl mx-auto flex flex-col items-center justify-center"
+      className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -128,14 +150,14 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
           <span>{formatDateForDisplayLongUtil(gameDataProp.date)}</span>
         </span>
         {/* Names Logo Scores */}
-        <div className="flex items-center gap-10 sm:gap-15">
-          <span className="flex flex-1 flex-col items-center gap-2">
+        <div className="flex items-center justify-center gap-6 px-2 sm:gap-10 sm:px-8">
+          <span className="flex flex-1 items-center justify-end gap-3 sm:gap-4">
             <div
-              className={`bg-white sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
+              className={`bg-white sm:border-4 rounded-full shrink-0 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
             >
               <img
                 alt={`${gameDataProp.awayTeamName} logo`}
-                className="size-15 rounded-full sm:size-20"
+                className="size-12 rounded-full sm:size-16"
                 src={gameDataProp.awayTeamLogo}
               />
             </div>
@@ -147,62 +169,58 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
             </div>
           </span>
           {gameDataProp.abstractGameState === 'Preview' ? (
-            <div className="pb-3 text-center text-4xl font-barlow-condensed uppercase text-white/70 md:text-5xl">
+            <div className="text-center text-3xl font-barlow-condensed uppercase text-white/70 md:text-4xl">
               vs
             </div>
           ) : (
-            <div className="flex items-baseline gap-3 pb-3 text-white sm:gap-4">
-              <span className="text-7xl font-barlow-condensed md:text-8xl">
+            <div className="flex items-center gap-2 text-white sm:gap-3">
+              <span className="text-6xl font-barlow-condensed leading-none md:text-7xl">
                 {gameDataProp.awayTeamScore}
               </span>
-              <span className="text-4xl font-barlow-condensed text-white/70 md:text-5xl">
+              <span className="text-3xl font-barlow-condensed leading-none text-white/40 md:text-4xl">
                 –
               </span>
-              <span className="text-7xl font-barlow-condensed md:text-8xl">
+              <span className="text-6xl font-barlow-condensed leading-none md:text-7xl">
                 {gameDataProp.homeTeamScore}
               </span>
             </div>
           )}
-          <span className="flex flex-1 flex-col items-center gap-2">
-            <div
-              className={`bg-white sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
-            >
-              <img
-                alt={`${gameDataProp.homeTeamName} logo`}
-                className="size-15 rounded-full sm:size-20"
-                src={gameDataProp.homeTeamLogo}
-              />
-            </div>
+          <span className="flex flex-1 items-center justify-start gap-3 sm:gap-4">
             <div className="hidden text-xl font-medium text-white md:block">
               {gameDataProp.homeTeamName}
             </div>
             <div className="text-xl font-medium text-white md:hidden">
               {teamAbbreviator(gameDataProp.homeTeamName)}
             </div>
+            <div
+              className={`bg-white sm:border-4 rounded-full shrink-0 ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
+            >
+              <img
+                alt={`${gameDataProp.homeTeamName} logo`}
+                className="size-12 rounded-full sm:size-16"
+                src={gameDataProp.homeTeamLogo}
+              />
+            </div>
           </span>
         </div>
         {/* Inning StartTime Venue */}
-        <div className="items-center flex flex-col">
-          <div className="text-base text-white/70 pt-4">
+        <div className="items-center flex flex-col gap-1 pt-3">
+          {gameDataProp.abstractGameState === 'Live' && (
+            <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
+          )}
+          {gameDataProp.abstractGameState === 'Final' && (
+            <h3 className="text-white font-extrabold tracking-wider text-xl font-barlow-condensed uppercase">
+              Final
+            </h3>
+          )}
+          <div className="text-sm text-white/70">
             {gameDataProp.abstractGameState === 'Live' &&
               gameDataProp.linescore?.inningState.slice(0, 3) +
                 ' ' +
-                gameDataProp.linescore?.currentInningOrdinal}
+                gameDataProp.linescore?.currentInningOrdinal +
+                ' • '}
             {gameDataProp.abstractGameState === 'Preview' &&
-              formatTimeForDisplayUtil(gameDataProp.startTime)}
-          </div>
-          <div className="py-2">
-            {/* future location for strikes-balls counter and runners-on-base-diagram  */}
-            {gameDataProp.abstractGameState === 'Live' && (
-              <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
-            )}
-            {gameDataProp.abstractGameState === 'Final' && (
-              <h3 className="text-white font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
-                Final
-              </h3>
-            )}
-          </div>
-          <div className="text-base text-white/70">
+              formatTimeForDisplayUtil(gameDataProp.startTime) + ' • '}
             {gameDataProp.gameVenue}
           </div>
         </div>

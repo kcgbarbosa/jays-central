@@ -1,15 +1,16 @@
 import type { Game } from '../types/models/game.model';
 
 export function getGameResult(game: Game) {
-  const { homeTeamScore, awayTeamScore, awayTeamName } = game;
+  const { homeTeamScore, awayTeamScore, awayTeamName, abstractGameState } =
+    game;
 
   const bjIsAway = awayTeamName.includes('Blue Jays');
 
-  if (homeTeamScore === undefined || awayTeamScore === undefined) {
+  if (abstractGameState === 'Preview') {
     return { scoresAvailable: false, awayWon: false, bjWon: false, bjIsAway };
   }
 
-  const awayWon = awayTeamScore > homeTeamScore;
+  const awayWon = awayTeamScore! > homeTeamScore!;
   const bjWon = bjIsAway ? awayWon : !awayWon;
 
   return { scoresAvailable: true, awayWon, bjWon, bjIsAway };
