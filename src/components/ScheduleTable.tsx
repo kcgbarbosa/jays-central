@@ -67,11 +67,8 @@ function ScheduleTable() {
     'text-white/70 hover:text-white hover:bg-primary/80';
 
   return (
-    <div className="sm:py-8 sm:px-4 max-w-7xl sm:mx-auto">
-      <h1 className="hidden sm:block text-xl font-bold text-primary mb-3 uppercase tracking-widest px-4 sm:px-0">
-        {new Date().getFullYear()} Schedule
-      </h1>
-      <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl overflow-hidden shadow-sm">
+    <div>
+      <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl overflow-hidden">
         <div className="bg-primary px-4 py-3 flex items-center gap-2">
           <button
             className={`${filterBtnBase} ${scheduleFilter === 'Remaining Games' ? filterBtnActive : filterBtnInactive}`}

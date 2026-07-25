@@ -97,11 +97,8 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
     }
   };
   return (
-    <div className="sm:py-8 sm:px-4 sm:max-w-7xl sm:mx-auto">
-      <h1 className="hidden sm:block text-xl font-bold text-primary mb-4 uppercase tracking-widest px-4 sm:px-0">
-        Current Roster
-      </h1>
-      <div className="px-4 sm:px-0 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div>
+      <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           {POSITION_GROUPS.map((group) => (
             <button
@@ -129,11 +126,9 @@ function RosterTable({ handleSelectPlayer }: RosterProps) {
       {playerData.length === 0 ? (
         <div>No roster data available.</div>
       ) : filteredRoster.length === 0 ? (
-        <div className="px-4 sm:px-0 text-muted text-sm">
-          No players match your search.
-        </div>
+        <div className="text-muted text-sm">No players match your search.</div>
       ) : (
-        <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl shadow-sm">
+        <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl overflow-hidden">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-primary text-white tracking-wide uppercase text-xs">
               <tr>
