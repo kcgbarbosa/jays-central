@@ -51,7 +51,13 @@ export function useMLBData() {
           }, 15000);
         };
 
-        if (heroGame?.abstractGameState !== 'Final') {
+        const todaysDate = new Date().toLocaleDateString('en-CA');
+        const shouldPoll =
+          heroGame != null &&
+          heroGame.date === todaysDate &&
+          heroGame.abstractGameState !== 'Final';
+
+        if (shouldPoll) {
           pollGameData();
         }
       } catch (err) {

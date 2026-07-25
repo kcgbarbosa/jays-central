@@ -59,7 +59,7 @@ export function CompletedGameRow({ gameData }: GameProps) {
     bjWon: isBlueJaysWinner,
     scoresAvailable,
   } = getGameResult(gameData);
-  const homeWon = !awayWon;
+  const homeWon = scoresAvailable && !awayWon;
 
   return (
     <tr

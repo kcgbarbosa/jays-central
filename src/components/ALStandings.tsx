@@ -45,24 +45,24 @@ function ALStandings() {
         <table className="w-full border-collapse">
           <thead>
             <tr className="text-xs font-semibold text-muted uppercase tracking-wider border-b border-border">
-              <th scope="col" className="pb-2 text-left font-semibold">
+              <th scope="col" className="px-3 pb-2 text-left font-semibold">
                 Team
               </th>
-              <th scope="col" className="pb-2 text-left font-semibold">
+              <th scope="col" className="px-3 pb-2 text-left font-semibold">
                 W
               </th>
-              <th scope="col" className="pb-2 text-left font-semibold">
+              <th scope="col" className="px-3 pb-2 text-left font-semibold">
                 L
               </th>
-              <th scope="col" className="pb-2 text-left font-semibold">
+              <th scope="col" className="px-3 pb-2 text-left font-semibold">
                 PCT
               </th>
-              <th scope="col" className="pb-2 text-left font-semibold">
+              <th scope="col" className="px-3 pb-2 text-left font-semibold">
                 GB
               </th>
               <th
                 scope="col"
-                className="pb-2 text-left font-semibold hidden sm:table-cell"
+                className="px-3 pb-2 text-left font-semibold hidden sm:table-cell"
               >
                 STRK
               </th>
@@ -74,16 +74,18 @@ function ALStandings() {
                 key={team.teamId}
                 className={`text-sm text-primary ${team.teamId === BLUEJAYS_TEAM_ID ? 'bg-primary/10 font-semibold' : ''} ${view === 'wildcard' && team.wildCardRank === '3' ? 'border-b-2 border-primary' : ''}`}
               >
-                <td className="py-2">{team.teamName}</td>
-                <td className="py-2">{team.wins}</td>
-                <td className="py-2">{team.losses}</td>
-                <td className="py-2">{team.winPercentage}</td>
-                <td className="py-2">
+                <td className="px-3 py-2">{team.teamName}</td>
+                <td className="px-3 py-2">{team.wins}</td>
+                <td className="px-3 py-2">{team.losses}</td>
+                <td className="px-3 py-2">{team.winPercentage}</td>
+                <td className="px-3 py-2">
                   {view === 'wildcard'
                     ? team.wildCardGamesBack
                     : team.gamesBack}
                 </td>
-                <td className="py-2 hidden sm:table-cell">{team.streakAbbr}</td>
+                <td className="px-3 py-2 hidden sm:table-cell">
+                  {team.streakAbbr}
+                </td>
               </tr>
             ))}
           </tbody>
