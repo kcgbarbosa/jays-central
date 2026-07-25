@@ -13,9 +13,18 @@ export const isGameInPast = (game: Game) => {
 export const getHeroGameDateUtil = (scheduleData: Game[]): Game | null => {
   const todaysDate = new Date().toLocaleDateString('en-CA');
 
-  const todaysGame = scheduleData.find((d) => d.date === todaysDate);
-  if (todaysGame) {
-    return todaysGame;
+  const todaysGames = scheduleData
+    .filter((d) => d.date === todaysDate)
+    .sort((a, b) => a.startTime.localeCompare(b.startTime));
+
+  if (todaysGames.length > 0) {
+    const liveGame = todaysGames.find((g) => g.abstractGameState === 'Live');
+    if (liveGame) return liveGame;
+
+    const upcomingToday = todaysGames.find((g) => !isGameInPast(g));
+    if (upcomingToday) return upcomingToday;
+
+    return todaysGames[todaysGames.length - 1];
   }
   const upcomingGames = scheduleData.filter((game) => !isGameInPast(game));
   if (upcomingGames.length === 0) return null;

@@ -13,16 +13,21 @@ function RosterPage() {
   };
 
   return (
-    <main className="bg-muted/5 w-full min-h-screen p-4">
-      <h1 className="sr-only">Roster Page</h1>
-      {isOpen && (
-        <PlayerProfileModal
-          playerID={selectedPlayerID}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
-      <RosterTable handleSelectPlayer={handleSelectPlayer} />
+    <main className="bg-background flex-1 w-full">
+      <div className="max-w-7xl mx-auto px-4 py-10 sm:py-14">
+        <header className="pb-8">
+          <h1 className="text-4xl font-bold text-primary">Roster</h1>
+          <p className="pt-2 text-muted">View the active 40 man roster.</p>
+        </header>
+        {isOpen && (
+          <PlayerProfileModal
+            playerID={selectedPlayerID}
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+          />
+        )}
+        <RosterTable handleSelectPlayer={handleSelectPlayer} />
+      </div>
     </main>
   );
 }

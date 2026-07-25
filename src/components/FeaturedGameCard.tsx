@@ -31,8 +31,9 @@ function LinescoreTable({
     inningMap[inn.num] = inn;
   });
 
-  const cell = 'px-3 py-4 text-center text-sm border border-border';
-  const headerCell = `${cell} bg-background font-semibold text-primary text-xs uppercase`;
+  const cell = 'px-2 py-3 text-center text-sm';
+  const headerCell =
+    'px-2 py-2 text-center text-xs font-semibold uppercase tracking-wider text-white/70';
 
   const rows = [
     {
@@ -47,22 +48,22 @@ function LinescoreTable({
     },
   ];
   return (
-    <div className="hidden w-full mt-6 overflow-x-auto sm:block">
-      <table className="w-full border-collapse border border-border text-sm">
+    <div className="hidden w-full mt-8 overflow-x-auto text-white sm:block">
+      <table className="w-full border-collapse text-sm">
         <thead>
-          <tr>
+          <tr className="border-b border-white/20">
             <th className={headerCell}>Team</th>
             {inningNumbers.map((n) => (
               <th key={n} className={headerCell}>
                 {n}
               </th>
             ))}
-            <th className={headerCell}>R</th>
+            <th className={`${headerCell} border-l border-white/20`}>R</th>
             <th className={headerCell}>H</th>
             <th className={headerCell}>E</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-white/20">
           {rows.map(({ label, side, totals }) => (
             <tr key={side}>
               <td className={`${cell} font-bold text-center`}>
@@ -73,7 +74,9 @@ function LinescoreTable({
                   {inningMap[n]?.[side].runs ?? '-'}
                 </td>
               ))}
-              <td className={`${cell} font-semibold`}>{totals?.runs ?? '-'}</td>
+              <td className={`${cell} font-semibold border-l border-white/20`}>
+                {totals?.runs ?? '-'}
+              </td>
               <td className={`${cell} font-semibold`}>{totals?.hits ?? '-'}</td>
               <td className={`${cell} font-semibold`}>
                 {totals?.errors ?? '-'}
@@ -92,7 +95,7 @@ function OutsIndicator({ outs }: { outs: number }) {
       {[0, 1, 2].map((i) => (
         <div
           key={i}
-          className={`size-3 rounded-full ${i < outs ? 'bg-primary' : 'bg-border'}`}
+          className={`size-3 rounded-full ${i < outs ? 'bg-white' : 'bg-white/10'}`}
         />
       ))}
     </div>
@@ -103,147 +106,135 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
   if (!gameDataProp || !gameDataProp.date) return null;
 
   return (
-    <>
-      {/* Card Container */}
-      <motion.div
-        className="w-full min-h-110 bg-background p-4 border border-border rounded-xl shadow-sm flex flex-col items-center justify-center"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        whileHover={{ scale: 1.01 }}
-        transition={{
-          opacity: {
-            type: 'tween',
-            duration: 0.25,
-            ease: 'easeOut',
-          },
-          y: {
-            type: 'tween',
-            duration: 0.25,
-            ease: 'easeOut',
-          },
-          scale: {
-            type: 'spring',
-            stiffness: 300,
-            damping: 20,
-          },
-        }}
-      >
-        {/* Scoreboard Container */}
-        <div className="w-full flex flex-col">
-          {/* Date Status */}
-          <span className="text-base text-muted flex justify-between pb-2">
-            {gameDataProp.abstractGameState === 'Live' && (
-              <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-accent ">
-                Live
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
-                </span>
+    <motion.div
+      className="w-full max-w-3xl mx-auto flex flex-col items-center justify-center"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+    >
+      {/* Scoreboard Container */}
+      <div className="w-full flex flex-col">
+        {/* Date Status */}
+        <span className="text-base text-white/70 flex items-center justify-center gap-3 pb-2">
+          {gameDataProp.abstractGameState === 'Live' && (
+            <span className="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-base font-medium tracking-tight uppercase text-white ">
+              Live
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
               </span>
-            )}
-            <span>{formatDateForDisplayLongUtil(gameDataProp.date)}</span>
+            </span>
+          )}
+          <span>{formatDateForDisplayLongUtil(gameDataProp.date)}</span>
+        </span>
+        {/* Names Logo Scores */}
+        <div className="flex items-center gap-10 sm:gap-15">
+          <span className="flex flex-1 flex-col items-center gap-2">
+            <div
+              className={`bg-white sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
+            >
+              <img
+                alt={`${gameDataProp.awayTeamName} logo`}
+                className="size-15 rounded-full sm:size-20"
+                src={gameDataProp.awayTeamLogo}
+              />
+            </div>
+            <div className="hidden text-xl font-medium text-white md:block">
+              {gameDataProp.awayTeamName}
+            </div>
+            <div className="text-xl font-medium text-white md:hidden">
+              {teamAbbreviator(gameDataProp.awayTeamName)}
+            </div>
           </span>
-          {/* Names Logo Scores */}
-          <div className="flex items-center gap-10 sm:gap-15">
-            <span className="flex flex-1 flex-col items-center gap-2">
-              <div
-                className={`sm:border-4 rounded-full ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-primary' : 'border-muted'}`}
-              >
-                <img
-                  alt={`${gameDataProp.awayTeamName} logo`}
-                  className="size-15 rounded-full sm:size-20"
-                  src={gameDataProp.awayTeamLogo}
-                />
-              </div>
-              <div className="hidden text-xl font-medium text-primary md:block">
-                {gameDataProp.awayTeamName}
-              </div>
-              <div className="text-xl font-medium text-primary md:hidden">
-                {teamAbbreviator(gameDataProp.awayTeamName)}
-              </div>
-            </span>
-            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl">
-              {gameDataProp.abstractGameState === 'Preview'
-                ? '-'
-                : gameDataProp.awayTeamScore}
+          {gameDataProp.abstractGameState === 'Preview' ? (
+            <div className="pb-3 text-center text-4xl font-barlow-condensed uppercase text-white/70 md:text-5xl">
+              vs
             </div>
-
-            <div className="w-8 pb-3 text-center text-7xl font-barlow-condensed md:text-8xl">
-              {gameDataProp.abstractGameState === 'Preview'
-                ? '-'
-                : gameDataProp.homeTeamScore}
+          ) : (
+            <div className="flex items-baseline gap-3 pb-3 text-white sm:gap-4">
+              <span className="text-7xl font-barlow-condensed md:text-8xl">
+                {gameDataProp.awayTeamScore}
+              </span>
+              <span className="text-4xl font-barlow-condensed text-white/70 md:text-5xl">
+                –
+              </span>
+              <span className="text-7xl font-barlow-condensed md:text-8xl">
+                {gameDataProp.homeTeamScore}
+              </span>
             </div>
-            <span className="flex flex-1 flex-col items-center gap-2">
-              <div
-                className={`sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-primary' : 'border-muted'}`}
-              >
-                <img
-                  alt={`${gameDataProp.homeTeamName} logo`}
-                  className="size-15 rounded-full sm:size-20"
-                  src={gameDataProp.homeTeamLogo}
-                />
-              </div>
-              <div className="hidden text-xl font-medium text-primary md:block">
-                {gameDataProp.homeTeamName}
-              </div>
-              <div className="text-xl font-medium text-primary md:hidden">
-                {teamAbbreviator(gameDataProp.homeTeamName)}
-              </div>
-            </span>
+          )}
+          <span className="flex flex-1 flex-col items-center gap-2">
+            <div
+              className={`bg-white sm:border-4 rounded-full ${gameDataProp.homeTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
+            >
+              <img
+                alt={`${gameDataProp.homeTeamName} logo`}
+                className="size-15 rounded-full sm:size-20"
+                src={gameDataProp.homeTeamLogo}
+              />
+            </div>
+            <div className="hidden text-xl font-medium text-white md:block">
+              {gameDataProp.homeTeamName}
+            </div>
+            <div className="text-xl font-medium text-white md:hidden">
+              {teamAbbreviator(gameDataProp.homeTeamName)}
+            </div>
+          </span>
+        </div>
+        {/* Inning StartTime Venue */}
+        <div className="items-center flex flex-col">
+          <div className="text-base text-white/70 pt-4">
+            {gameDataProp.abstractGameState === 'Live' &&
+              gameDataProp.linescore?.inningState.slice(0, 3) +
+                ' ' +
+                gameDataProp.linescore?.currentInningOrdinal}
+            {gameDataProp.abstractGameState === 'Preview' &&
+              formatTimeForDisplayUtil(gameDataProp.startTime)}
           </div>
-          {/* Inning StartTime Venue */}
-          <div className="items-center flex flex-col">
-            <div className="text-base text-muted pt-4">
-              {gameDataProp.abstractGameState === 'Live' &&
-                gameDataProp.linescore?.inningState.slice(0, 3) +
-                  ' ' +
-                  gameDataProp.linescore?.currentInningOrdinal}
-              {gameDataProp.abstractGameState === 'Preview' &&
-                formatTimeForDisplayUtil(gameDataProp.startTime)}
-            </div>
-            <div className="py-2">
-              {/* future location for strikes-balls counter and runners-on-base-diagram  */}
-              {gameDataProp.abstractGameState === 'Live' && (
-                <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
-              )}
-              {gameDataProp.abstractGameState === 'Final' && (
-                <h3 className="text-primary font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
-                  Final
-                </h3>
-              )}
-            </div>
-            <div className="text-base text-muted">{gameDataProp.gameVenue}</div>
+          <div className="py-2">
+            {/* future location for strikes-balls counter and runners-on-base-diagram  */}
+            {gameDataProp.abstractGameState === 'Live' && (
+              <OutsIndicator outs={gameDataProp.linescore?.outs ?? 0} />
+            )}
+            {gameDataProp.abstractGameState === 'Final' && (
+              <h3 className="text-white font-extrabold tracking-wider text-2xl font-barlow-condensed uppercase">
+                Final
+              </h3>
+            )}
+          </div>
+          <div className="text-base text-white/70">
+            {gameDataProp.gameVenue}
           </div>
         </div>
-        {/* Pitcher Linescore Container */}
-        <div className="w-full">
-          {gameDataProp.abstractGameState === 'Preview' &&
-            gameDataProp.probablePitchers && (
-              <PitcherMatchupCard
-                gameStatus={gameDataProp.abstractGameState}
-                pitcherA={gameDataProp.probablePitchers.away}
-                pitcherB={gameDataProp.probablePitchers.home}
-              />
-            )}
-          {gameDataProp.abstractGameState !== 'Preview' &&
-            gameDataProp.linescore && (
-              <LinescoreTable
-                linescore={gameDataProp.linescore}
-                homeTeamName={gameDataProp.homeTeamName}
-                awayTeamName={gameDataProp.awayTeamName}
-              />
-            )}
-          {gameDataProp.decisions && (
+      </div>
+      {/* Pitcher Linescore Container */}
+      <div className="w-full">
+        {gameDataProp.abstractGameState === 'Preview' &&
+          gameDataProp.probablePitchers && (
             <PitcherMatchupCard
               gameStatus={gameDataProp.abstractGameState}
-              pitcherA={gameDataProp.decisions.winner}
-              pitcherB={gameDataProp.decisions.loser}
-              pitcherC={gameDataProp.decisions.save}
+              pitcherA={gameDataProp.probablePitchers.away}
+              pitcherB={gameDataProp.probablePitchers.home}
             />
           )}
-        </div>
-      </motion.div>
-    </>
+        {gameDataProp.abstractGameState !== 'Preview' &&
+          gameDataProp.linescore && (
+            <LinescoreTable
+              linescore={gameDataProp.linescore}
+              homeTeamName={gameDataProp.homeTeamName}
+              awayTeamName={gameDataProp.awayTeamName}
+            />
+          )}
+        {gameDataProp.decisions && (
+          <PitcherMatchupCard
+            gameStatus={gameDataProp.abstractGameState}
+            pitcherA={gameDataProp.decisions.winner}
+            pitcherB={gameDataProp.decisions.loser}
+            pitcherC={gameDataProp.decisions.save}
+          />
+        )}
+      </div>
+    </motion.div>
   );
 }
 

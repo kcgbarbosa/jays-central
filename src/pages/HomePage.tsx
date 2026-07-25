@@ -30,23 +30,24 @@ function HomePage() {
   );
 
   return (
-    <main className="bg-muted/5 min-h-screen w-full p-4 overflow-hidden">
+    <main className="flex-1 w-full bg-background">
       <h1 className="sr-only">Home Page</h1>
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <div>
-            <FeaturedGameCard gameDataProp={heroGameData} />
-          </div>
-          <div>
-            <RecentResultsCard />
-          </div>
-        </div>
 
-        <section className="lg:col-span-1 flex flex-col gap-6">
-          <div className="pb-4">
-            <ALStandings />
-          </div>
-          <div>
+      <section className="bg-primary">
+        <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
+          <p className="text-center text-sm font-semibold uppercase tracking-widest text-white/70 pb-8">
+            Featured Game
+          </p>
+          <FeaturedGameCard gameDataProp={heroGameData} />
+        </div>
+      </section>
+
+      <div className="max-w-6xl mx-auto px-4 py-12 sm:py-16 space-y-12 sm:space-y-16">
+        <section>
+          <h2 className="text-2xl font-semibold text-primary pb-6">
+            Stat Leaders
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <StatLeaderCard
               statName="Home Runs"
               playerName={homeRunLeader?.fullName}
@@ -56,8 +57,6 @@ function HomePage() {
               positionAbbreviation={homeRunLeader?.positionAbbreviation}
               statAbbreviation="HR"
             />
-          </div>
-          <div>
             <StatLeaderCard
               statName="Hits"
               playerName={hitLeader?.fullName}
@@ -67,8 +66,6 @@ function HomePage() {
               positionAbbreviation={hitLeader?.positionAbbreviation}
               statAbbreviation="H"
             />
-          </div>
-          <div>
             <StatLeaderCard
               statName="Strikeouts"
               playerName={strikeoutLeader?.fullName}
@@ -80,6 +77,11 @@ function HomePage() {
             />
           </div>
         </section>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <ALStandings />
+          <RecentResultsCard />
+        </div>
       </div>
     </main>
   );

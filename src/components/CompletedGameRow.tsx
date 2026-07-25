@@ -54,13 +54,17 @@ export function CompletedGameRow({ gameData }: GameProps) {
     );
   }
 
-  const { awayWon, bjWon: isBlueJaysWinner } = getGameResult(gameData);
-  const homeWon = !awayWon;
+  const {
+    awayWon,
+    bjWon: isBlueJaysWinner,
+    scoresAvailable,
+  } = getGameResult(gameData);
+  const homeWon = scoresAvailable && !awayWon;
 
   return (
     <tr
       className={`border-b border-border transition-colors duration-150 ${
-        isBlueJaysWinner
+        isBlueJaysWinner && scoresAvailable
           ? 'bg-primary/5 hover:bg-primary/10'
           : 'bg-background hover:bg-muted/10'
       }`}
@@ -95,7 +99,7 @@ export function CompletedGameRow({ gameData }: GameProps) {
             <span className="hidden sm:inline">{homeTeamName}</span>
             <span>{homeTeamScore}</span>
           </div>
-          <WinLossBadge won={isBlueJaysWinner} />
+          {scoresAvailable && <WinLossBadge won={isBlueJaysWinner} />}
         </div>
       </td>
     </tr>
