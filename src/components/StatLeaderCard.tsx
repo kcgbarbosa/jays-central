@@ -18,26 +18,25 @@ function StatLeaderCard({
   statAbbreviation,
 }: StatLeaderCardProps) {
   return (
-    <div className="bg-background border border-border rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow duration-200">
-      <h2 className="text-sm font-semibold text-primary uppercase tracking-widest pb-3">
+    <div className="rounded-2xl border border-border bg-background p-5 shadow-sm">
+      <h3 className="text-sm font-semibold text-muted uppercase tracking-widest pb-3">
         {statName}
-      </h2>
+      </h3>
       <div className="flex items-center gap-4">
         <img
           alt={`${playerName} headshot`}
           src={`https://midfield.mlbstatic.com/v1/people/${playerID}/spots/120`}
-          className="size-25 rounded-lg object-contain bg-background "
+          className="size-20 rounded-lg object-contain bg-background"
         />
         <div className="flex flex-col gap-1">
-          <span className="text-base font-semibold text-primary">
+          <span className="text-sm font-semibold text-primary">
             {playerName}
-            <span className="text-accent"> {jerseyNumber}</span>
           </span>
-          <span className="text-sm text-muted uppercase tracking-wider">
-            {positionAbbreviation}
+          <span className="text-xs text-muted uppercase tracking-wider">
+            {jerseyNumber} · {positionAbbreviation}
           </span>
-          <div className="flex items-baseline gap-1.5 mt-2">
-            <span className="text-4xl font-bold text-primary">{statValue}</span>
+          <div className="flex items-baseline gap-1.5 mt-1">
+            <span className="text-3xl font-bold text-primary">{statValue}</span>
             <span className="text-sm text-muted uppercase tracking-wider">
               {statAbbreviation}
             </span>
