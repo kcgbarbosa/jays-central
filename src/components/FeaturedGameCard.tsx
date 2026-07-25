@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Game } from '../types/models/game.model';
 import {
   formatTimeForDisplayUtil,
@@ -64,47 +65,46 @@ function LinescoreTable({
       </div>
       {isOpen && (
         <div className="w-full overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
-        <thead>
-          <tr className="border-b border-white/20">
-            <th className={headerCell}>Team</th>
-            {inningNumbers.map((n) => (
-              <th key={n} className={headerCell}>
-                {n}
-              </th>
-            ))}
-            <th className={`${headerCell} border-l border-white/20`}>R</th>
-            <th className={headerCell}>H</th>
-            <th className={headerCell}>E</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-white/20">
-          {rows.map(({ label, side, totals }) => (
-            <tr key={side}>
-              <td className={`${cell} font-bold text-center`}>
-                {teamAbbreviator(label)}
-              </td>
-              {inningNumbers.map((n) => (
-                <td key={n} className={`${cell} font-medium`}>
-                  {inningMap[n]?.[side].runs ?? '-'}
-                </td>
-              ))}
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-white/20">
+                <th className={headerCell}>Team</th>
+                {inningNumbers.map((n) => (
+                  <th key={n} className={headerCell}>
+                    {n}
+                  </th>
+                ))}
+                <th className={`${headerCell} border-l border-white/20`}>R</th>
+                <th className={headerCell}>H</th>
+                <th className={headerCell}>E</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/20">
+              {rows.map(({ label, side, totals }) => (
+                <tr key={side}>
+                  <td className={`${cell} font-bold text-center`}>
+                    {teamAbbreviator(label)}
+                  </td>
+                  {inningNumbers.map((n) => (
+                    <td key={n} className={`${cell} font-medium`}>
+                      {inningMap[n]?.[side].runs ?? '-'}
+                    </td>
+                  ))}
                   <td
                     className={`${cell} font-semibold border-l border-white/20`}
                   >
-                    ``
-                {totals?.runs ?? '-'}
-              </td>
+                    {totals?.runs ?? '-'}
+                  </td>
                   <td className={`${cell} font-semibold`}>
                     {totals?.hits ?? '-'}
                   </td>
-              <td className={`${cell} font-semibold`}>
-                {totals?.errors ?? '-'}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td className={`${cell} font-semibold`}>
+                    {totals?.errors ?? '-'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
@@ -151,7 +151,7 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
         </span>
         {/* Names Logo Scores */}
         <div className="flex items-center justify-center gap-6 px-2 sm:gap-10 sm:px-8">
-          <span className="flex items-center justify-end gap-3 sm:gap-4">
+          <span className="flex flex-1 items-center justify-end gap-3 sm:gap-4">
             <div
               className={`bg-white sm:border-4 rounded-full shrink-0 ${gameDataProp.awayTeamName === 'Toronto Blue Jays' ? 'border-white' : 'border-white/20'}`}
             >
@@ -173,19 +173,19 @@ function FeaturedGameCard({ gameDataProp }: GameDataProps) {
               vs
             </div>
           ) : (
-            <div className="flex items-baseline gap-2 text-white sm:gap-3">
-              <span className="text-6xl font-barlow-condensed md:text-7xl">
+            <div className="flex items-center gap-2 text-white sm:gap-3">
+              <span className="text-6xl font-barlow-condensed leading-none md:text-7xl">
                 {gameDataProp.awayTeamScore}
               </span>
-              <span className="text-3xl font-barlow-condensed text-white/40 md:text-4xl">
+              <span className="text-3xl font-barlow-condensed leading-none text-white/40 md:text-4xl">
                 –
               </span>
-              <span className="text-6xl font-barlow-condensed md:text-7xl">
+              <span className="text-6xl font-barlow-condensed leading-none md:text-7xl">
                 {gameDataProp.homeTeamScore}
               </span>
             </div>
           )}
-          <span className="flex items-center justify-start gap-3 sm:gap-4">
+          <span className="flex flex-1 items-center justify-start gap-3 sm:gap-4">
             <div className="hidden text-xl font-medium text-white md:block">
               {gameDataProp.homeTeamName}
             </div>
