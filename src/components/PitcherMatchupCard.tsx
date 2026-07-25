@@ -14,8 +14,8 @@ const PitcherMatchupCard = ({
   pitcherC,
 }: PitcherMatchupCardProps) => {
   return (
-    <div className="w-11/12 mx-auto bg-background rounded-xl p-2 m-3 border-t-2 border-border">
-      <h2 className="text-xs font-semibold text-muted uppercase tracking-widest text-center mb-3">
+    <div className="w-full rounded-2xl border border-white/20 bg-white/10 p-4 mt-8">
+      <h2 className="text-xs font-semibold text-white/70 uppercase tracking-widest text-center mb-3">
         {gameStatus === 'Preview' ? 'Probable Pitchers' : 'Game Decisions'}
       </h2>
 
@@ -29,32 +29,32 @@ const PitcherMatchupCard = ({
                 ? pitcherA?.playerActionShotUrl
                 : pitcherA?.playerHeadshotUrl
             }
-            className="size-15 rounded-full object-cover bg-muted/90 md:size-30"
+            className="size-15 rounded-full object-cover bg-white/10 md:size-30"
           />
           <div className="flex flex-col gap-0.5">
-            <span className="text-sm font-semibold text-primary">
+            <span className="text-sm font-semibold text-white">
               {pitcherA?.fullName}
             </span>
             {gameStatus === 'Preview' && (
-              <span className="text-xs text-muted uppercase">Away</span>
+              <span className="text-xs text-white/70 uppercase">Away</span>
             )}
             {gameStatus === 'Final' && (
-              <span className="font-bold text-2xl text-primary">W</span>
+              <span className="font-bold text-2xl text-white">W</span>
             )}
           </div>
         </div>
-        <span className="hidden sm:block text-base text-center font-bold text-muted">
+        <span className="hidden sm:block text-base text-center font-bold text-white/70">
           VS.
         </span>
 
         {/* Pitcher B */}
         <div className="flex items-center gap-3">
           <div className="flex flex-col sm:text-right">
-            <span className="text-sm font-semibold text-primary">
+            <span className="text-sm font-semibold text-white">
               {pitcherB?.fullName}
             </span>
             {gameStatus === 'Preview' && (
-              <span className="text-xs text-muted uppercase">Home</span>
+              <span className="text-xs text-white/70 uppercase">Home</span>
             )}
             {gameStatus === 'Final' && (
               <span className="font-bold text-2xl text-accent">L</span>
@@ -67,21 +67,21 @@ const PitcherMatchupCard = ({
                 ? pitcherB?.playerActionShotUrl
                 : pitcherB?.playerHeadshotUrl
             }
-            className="order-first sm:order-last size-15 rounded-full object-cover bg-muted/90 md:size-30"
+            className="order-first sm:order-last size-15 rounded-full object-cover bg-white/10 md:size-30"
           />
         </div>
       </div>
       {pitcherC && (
-        <div className="flex items-center justify-start gap-2 mt-3 pt-3 border-t border-border sm:justify-center">
+        <div className="flex items-center justify-start gap-2 mt-3 pt-3 border-t border-white/20 sm:justify-center">
           <img
             alt={`${pitcherC.fullName} headshot`}
             src={pitcherC.playerHeadshotUrl}
-            className="size-15 rounded-full object-cover bg-muted/90"
+            className="size-15 rounded-full object-cover bg-white/10"
           />
-          <span className="text-xs font-medium text-primary">
+          <span className="text-xs font-medium text-white">
             {pitcherC.fullName}
           </span>
-          <span className="text-xs font-bold text-primary">S</span>
+          <span className="text-xs font-bold text-white">S</span>
         </div>
       )}
     </div>
