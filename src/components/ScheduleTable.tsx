@@ -1,7 +1,6 @@
 import { useContext, useMemo, useState } from 'react';
 import { ScheduleContext, SeasonContext } from '../store/contexts';
-import { CompletedGameRow } from './CompletedGameRow';
-import UpcomingGameRow from './UpcomingGameRow';
+import GameListRow from './GameListRow';
 import { isGameInPast } from '../utils/dateAndTimeUtilities';
 
 type ScheduleFilterType =
@@ -99,41 +98,17 @@ function ScheduleTable() {
             </option>
           </select>
         </div>
-        <table className="w-full border-collapse">
-          <thead className="bg-muted/10 text-xs font-semibold text-muted uppercase tracking-wide border-b border-border">
-            {isCompleted ? (
-              <tr>
-                <th className="px-4 py-3 text-left">Date</th>
-                <th className="px-4 py-3 text-left sm:text-center">Result</th>
-              </tr>
-            ) : (
-              <tr>
-                <th className="px-4 py-3 text-left">Date</th>
-                <th className="px-4 py-3 text-left sm:text-center">Matchup</th>
-                <th className="px-4 py-3 text-left hidden sm:table-cell">
-                  First Pitch
-                </th>
-              </tr>
-            )}
-          </thead>
-          <tbody className="divide-y divide-border bg-background">
-            {filteredGames.length === 0 ? (
-              <tr>
-                <td colSpan={3} className="text-center p-4 text-muted text-sm">
-                  No games found.
-                </td>
-              </tr>
-            ) : isCompleted ? (
-              filteredGames.map((d) => (
-                <CompletedGameRow key={d.gamePk} gameData={d} />
-              ))
-            ) : (
-              filteredGames.map((d) => (
-                <UpcomingGameRow key={d.gamePk} gameData={d} />
-              ))
-            )}
-          </tbody>
-        </table>
+        <div className="divide-y divide-border bg-background">
+          {filteredGames.length === 0 ? (
+            <div className="text-center p-4 text-muted text-sm">
+              No games found.
+            </div>
+          ) : (
+            filteredGames.map((d) => (
+              <GameListRow key={d.gamePk} gameData={d} />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
