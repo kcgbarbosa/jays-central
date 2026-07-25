@@ -56,19 +56,19 @@ function ScheduleTable() {
     regularSeasonEndDate,
   ]);
 
-  const isCompleted =
-    scheduleFilter !== 'Remaining Games' && (scheduleFilter as string) !== '';
-
   const filterBtnBase =
     'px-3 py-1.5 rounded text-sm font-medium transition-colors duration-150 cursor-pointer';
   const filterBtnActive = 'bg-primary/10 text-primary hover:bg-primary/20';
   const filterBtnInactive =
     'text-white/70 hover:text-white hover:bg-primary/80';
 
+  const selectClass =
+    'px-3 py-1.5 rounded text-sm font-medium transition-colors duration-150 cursor-pointer bg-primary text-white hover:bg-white/10';
+
   return (
     <div>
       <div className="-mx-4 sm:mx-0 border-y sm:border border-border sm:rounded-xl overflow-hidden">
-        <div className="bg-primary px-4 py-3 flex items-center gap-2">
+        <div className="bg-primary px-4 py-3 flex items-center justify-between gap-2">
           <button
             className={`${filterBtnBase} ${scheduleFilter === 'Remaining Games' ? filterBtnActive : filterBtnInactive}`}
             onClick={() => handleSetScheduleFilter('Remaining Games')}
@@ -80,7 +80,7 @@ function ScheduleTable() {
           </label>
           <select
             id="season-filter"
-            className={`${filterBtnBase} ${isCompleted ? filterBtnActive : filterBtnInactive}`}
+            className={selectClass}
             value={scheduleFilter}
             onChange={(e) =>
               handleSetScheduleFilter(e.target.value as ScheduleFilterType)
