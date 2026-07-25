@@ -3,19 +3,19 @@ import { FaGithub } from 'react-icons/fa6';
 import logoURL from '../assets/imgs/logo-bluejays.png';
 
 const navLinks = [
-  { id: 1, name: 'Home', href: '/' },
-  { id: 2, name: 'Roster', href: '/RosterPage' },
-  { id: 3, name: 'Schedule', href: '/SchedulePage' },
+  { name: 'Home', href: '/' },
+  { name: 'Roster', href: '/RosterPage' },
+  { name: 'Schedule', href: '/SchedulePage' },
 ];
 
 const resourceLinks = [
-  { id: 1, name: 'Official Team Site', href: 'https://www.mlb.com/bluejays' },
-  { id: 2, name: 'Tickets', href: 'https://www.mlb.com/bluejays/tickets' },
-  { id: 3, name: 'MLB Standings', href: 'https://www.mlb.com/standings' },
+  { name: 'Official Team Site', href: 'https://www.mlb.com/bluejays' },
+  { name: 'Tickets', href: 'https://www.mlb.com/bluejays/tickets' },
+  { name: 'MLB Standings', href: 'https://www.mlb.com/standings' },
 ];
 
 const linkClass =
-  'inline-flex w-fit text-[0.95rem] text-white/85 transition-colors duration-200 hover:font-semibold hover:text-white';
+  'inline-flex w-fit text-sm text-white/70 transition-colors duration-200 hover:text-white';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -34,23 +34,23 @@ function Footer() {
         </div>
 
         <nav aria-label="Site" className="flex flex-col gap-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-white/60">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-white/70">
             Explore
           </h2>
           {navLinks.map((link) => (
-            <NavLink key={link.id} to={link.href} className={linkClass}>
+            <NavLink key={link.name} to={link.href} className={linkClass}>
               {link.name}
             </NavLink>
           ))}
         </nav>
 
         <nav aria-label="Resources" className="flex flex-col gap-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-white/60">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-white/70">
             Resources
           </h2>
           {resourceLinks.map((link) => (
             <a
-              key={link.id}
+              key={link.name}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -62,14 +62,14 @@ function Footer() {
         </nav>
 
         <div className="flex flex-col gap-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-white/60">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-white/70">
             Project
           </h2>
           <a
             href="https://github.com/kcgbarbosa/torontobluejays-dashboard"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-fit items-center gap-2 text-[0.95rem] text-white/85 transition-colors duration-200 hover:font-semibold hover:text-white"
+            className={`${linkClass} items-center gap-2`}
           >
             <FaGithub size={18} />
             Source on GitHub
@@ -77,13 +77,13 @@ function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-10 py-5 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-white/20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-10 py-5 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {currentYear} Blue Jays Central · Built by Kevin-Christian
             Giraldo-Barbosa
           </p>
-          <p className="max-w-xl sm:text-right ">
+          <p className="max-w-xl sm:text-right">
             Independent project. Not affiliated with Major League Baseball or
             the Toronto Blue Jays.
           </p>
