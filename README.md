@@ -1,52 +1,58 @@
 # Jays Central
 
-A data-driven Toronto Blue Jays dashboard, powered by the public MLB Stats API.
+A Toronto Blue Jays website built on the MLB Stats API. Features include live game tracking, a full season schedule, 40-man roster, and American League standings.
 
-**[Live Demo](https://jays.kcgbarbosa.dev)** · **[View Code](https://github.com/kcgbarbosa/jays-central)**
+**[Live Site](https://jays.kcgbarbosa.dev)** · **[Code](https://github.com/kcgbarbosa/jays-central)**
 
-<img width="1316" height="811" alt="dashboard page view" src="https://github.com/user-attachments/assets/fdd39226-62d6-4e08-993d-82075b235cfd" />
+<img width="800" alt="desktop view, game results, player statistics and american league standings table" src="https://github.com/user-attachments/assets/5d8d2f84-4835-42d5-bcfb-6423a59afd77" />
 
 ---
 
 ## Stack
 
-React 19 + TypeScript | React Router v7 | Vite | Tailwind CSS v4 | Framer Motion | Vitest
+React 19 + TypeScript | React Router v7 | Vite | Tailwind CSS v4 | Motion | Vitest
 
 ---
 
-## Features
+## Pages
 
-- Featured card shows the current or next game (depending on game status) with pre-game (probable pitchers), live (linescore + outs), and final (game decisions) states
-- Live polling when a game is in progress
-- Season schedule filterable by remaining, completed, spring training, and postseason games
-- Roster table with per-player biography and sortable statistic data
-- Statistic leaders from the active roster
-- American League standings
+**Home** — featured game card that switches between pre-game, live, and post-game states. Also has stat leaders, standings, and recent results.
+
+**Schedule** — full season schedule, filterable by remaining, completed, spring training, and postseason.
+
+**Roster** — the 40-man roster with search, position filters, sortable columns, additional player profile information.
 
 ---
 
-## How the API data is handled
+## Architecture
 
-The MLB Stats API provides deeply nested JSON data. Team responses, pitcher references, and game decisions all have inconsistent shapes depending on the game state. To organize the data, the raw responses are typed as DTOs in src/types/dto/mlb.dto.ts. These are then mapped by src/utils/dtoToModelMappers.ts, where the data is flattened, updated, and field-handled before being returned as clean domain models. These domain models leave me with much cleaner data to work with, which is also easily updatable if needed down the line.
+API responses are handled as DTOs (`src/types/dto/`), mapped to flattened domain models (`src/utils/dtoToModelMappers.ts`), and distributed to components through React Context (`src/store/`).
 
 ---
 
 ## Local Setup
 
 ```bash
-# 1. Clone and install
 git clone https://github.com/kcgbarbosa/jays-central.git
 cd jays-central
 npm install
+```
 
-# 2. Create .env
+Create a `.env` in the project root:
+
+```
 VITE_MLB_BASE_URL=https://statsapi.mlb.com/api/v1
 VITE_MLB_MEDIA_BASE_URL=https://www.mlbstatic.com/team-logos
 VITE_BLUEJAYS_TEAMID=141
+```
 
-# 3. Run
+Then:
+
+```bash
 npm run dev
 ```
+
+`npm run build` type-checks and builds, `npm test` runs Vitest, `npm run lint` runs ESLint and Prettier.
 
 ---
 
